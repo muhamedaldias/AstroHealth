@@ -1,0 +1,55 @@
+# AUTHORITATIVE ownership map. Every tracked file must fall under exactly one `path` prefix
+# (longest prefix wins). `make check` fails on orphan files.
+# .github/CODEOWNERS is GENERATED from this file (make gen).
+#
+# Replace the three handles below with the real GitHub usernames, then run `make gen`.
+
+people:
+  ai:  { handle: "@AI_OWNER", role: "AI and Data" }
+  web: { handle: "@FE_OWNER", role: "Frontend" }
+  api: { handle: "@BE_OWNER", role: "Backend" }
+
+paths:
+  # ---- shared contract: change only by contract PR, approved by BOTH other members
+  - { path: contracts/openapi.yaml,          owners: [ai, web, api], kind: contract }
+  - { path: contracts/fixtures/manifest.json, owners: [ai, web, api], kind: contract }
+  - { path: contracts/CHANGELOG.md,          owners: [ai, web, api], kind: contract }
+  - { path: contracts/README.md,             owners: [ai, web, api], kind: contract }
+  # golden data: content is written by AI/Data, consumed by Backend/Frontend
+  - { path: contracts/fixtures/,             owners: [ai],           kind: data }
+
+  # ---- generated: nobody edits by hand
+  - { path: packages/contracts_py/,          owners: [api],          kind: generated }
+  - { path: apps/web/src/api/schema.d.ts,    owners: [web],          kind: generated }
+  - { path: .github/CODEOWNERS,              owners: [api],          kind: generated }
+
+  # ---- AI and Data
+  - { path: packages/twin_core/,             owners: [ai],           kind: source }
+  - { path: data/,                           owners: [ai],           kind: data }
+  - { path: scripts/make_seed.py,            owners: [ai],           kind: source }
+  - { path: docs/SCIENCE_NOTES.md,           owners: [ai],           kind: docs }
+
+  # ---- Backend
+  - { path: apps/api/,                       owners: [api],          kind: source }
+  - { path: Dockerfile,                      owners: [api],          kind: infra }
+  - { path: docker-compose.yml,              owners: [api],          kind: infra }
+
+  # ---- Frontend
+  - { path: apps/web/,                       owners: [web],          kind: source }
+
+  # ---- shared infrastructure and docs (any member may change; one approval from another)
+  - { path: OWNERSHIP.yaml,                  owners: [ai, web, api], kind: infra }
+  - { path: .github/,                        owners: [ai, web, api], kind: infra }
+  - { path: scripts/,                        owners: [ai, web, api], kind: infra }
+  - { path: docs/,                           owners: [ai, web, api], kind: docs }
+  - { path: Makefile,                        owners: [ai, web, api], kind: infra }
+  - { path: pyproject.toml,                  owners: [ai, web, api], kind: infra }
+  - { path: uv.lock,                         owners: [ai, web, api], kind: infra }
+  - { path: .python-version,                 owners: [ai, web, api], kind: infra }
+  - { path: .gitignore,                      owners: [ai, web, api], kind: infra }
+  - { path: .dockerignore,                   owners: [api],          kind: infra }
+  - { path: .gitattributes,                  owners: [ai, web, api], kind: infra }
+  - { path: .editorconfig,                   owners: [ai, web, api], kind: infra }
+  - { path: .env.example,                    owners: [ai, web, api], kind: infra }
+  - { path: README.md,                       owners: [ai, web, api], kind: docs }
+  - { path: CONTRIBUTING.md,                 owners: [ai, web, api], kind: docs }

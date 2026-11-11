@@ -1,0 +1,9 @@
+# `docker compose up --build` -> everything at http://localhost:8000 (API + web)
+services:
+  app:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      BONETWIN_ENGINE: ${BONETWIN_ENGINE:-stub}
+    volumes:
+      - ./data/runtime:/repo/data/runtime

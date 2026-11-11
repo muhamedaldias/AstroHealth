@@ -1,0 +1,40 @@
+[project]
+name = "astro-bone-twin"
+version = "0.1.0"
+description = "Workspace root. Real code lives in packages/* and apps/api."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["packages/*", "apps/api"]
+
+[tool.uv.sources]
+bonetwin-contracts = { workspace = true }
+twin-core = { workspace = true }
+bonetwin-api = { workspace = true }
+
+[dependency-groups]
+dev = [
+  "ruff>=0.8",
+  "pytest>=8",
+  "httpx>=0.27",
+  "pyyaml>=6",
+  "datamodel-code-generator>=0.26",
+  "openapi-spec-validator>=0.7",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+extend-exclude = ["packages/contracts_py/src/bonetwin_contracts/models.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "TID"]
+ignore = ["TID252"]  # relative imports inside a package are fine
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["packages", "apps/api", "scripts"]

@@ -1,0 +1,13 @@
+[project]
+name = "twin-core"
+version = "0.1.0"
+description = "AI/Data engine: bone-loss digital twin. Public API = twin_core/__init__.py"
+requires-python = ">=3.11"
+dependencies = ["bonetwin-contracts", "pydantic>=2.7", "httpx>=0.27"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/twin_core"]

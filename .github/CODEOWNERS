@@ -1,0 +1,36 @@
+# GENERATED from OWNERSHIP.yaml by scripts/gen_codeowners.py - do not edit by hand.
+# GitHub rule: LAST matching line wins, so specific paths come after general ones.
+# NOTE: GitHub requires approval from ANY listed owner, not all of them. The 'contract PR
+# needs both other members' rule is a team rule (docs/team/TEAM_CONTRACT.md).
+
+/data/                                        @AI_OWNER
+/docs/                                        @AI_OWNER @FE_OWNER @BE_OWNER
+/uv.lock                                      @AI_OWNER @FE_OWNER @BE_OWNER
+/.github/                                     @AI_OWNER @FE_OWNER @BE_OWNER
+/scripts/                                     @AI_OWNER @FE_OWNER @BE_OWNER
+/Makefile                                     @AI_OWNER @FE_OWNER @BE_OWNER
+/apps/api/                                    @BE_OWNER
+/apps/web/                                    @FE_OWNER
+/README.md                                    @AI_OWNER @FE_OWNER @BE_OWNER
+/Dockerfile                                   @BE_OWNER
+/.gitignore                                   @AI_OWNER @FE_OWNER @BE_OWNER
+/.env.example                                 @AI_OWNER @FE_OWNER @BE_OWNER
+/.dockerignore                                @BE_OWNER
+/.editorconfig                                @AI_OWNER @FE_OWNER @BE_OWNER
+/OWNERSHIP.yaml                               @AI_OWNER @FE_OWNER @BE_OWNER
+/pyproject.toml                               @AI_OWNER @FE_OWNER @BE_OWNER
+/.gitattributes                               @AI_OWNER @FE_OWNER @BE_OWNER
+/.python-version                              @AI_OWNER @FE_OWNER @BE_OWNER
+/CONTRIBUTING.md                              @AI_OWNER @FE_OWNER @BE_OWNER
+/.github/CODEOWNERS                           @BE_OWNER
+/docker-compose.yml                           @BE_OWNER
+/contracts/README.md                          @AI_OWNER @FE_OWNER @BE_OWNER
+/contracts/fixtures/                          @AI_OWNER
+/packages/twin_core/                          @AI_OWNER
+/scripts/make_seed.py                         @AI_OWNER
+/docs/SCIENCE_NOTES.md                        @AI_OWNER
+/contracts/openapi.yaml                       @AI_OWNER @FE_OWNER @BE_OWNER
+/contracts/CHANGELOG.md                       @AI_OWNER @FE_OWNER @BE_OWNER
+/packages/contracts_py/                       @BE_OWNER
+/apps/web/src/api/schema.d.ts                 @FE_OWNER
+/contracts/fixtures/manifest.json             @AI_OWNER @FE_OWNER @BE_OWNER

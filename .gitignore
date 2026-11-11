@@ -1,0 +1,21 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+# node
+node_modules/
+apps/web/dist/
+# env + runtime data
+.env
+data/raw/*
+data/runtime/*
+!data/**/.gitkeep
+# os / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
