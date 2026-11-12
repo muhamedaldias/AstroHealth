@@ -19,3 +19,17 @@ Thumbs.db
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# astrohealth ai frontend (added by frontend-data upload)
+# strict dependency / build / runtime ignores
+dist/
+dist-ssr/
+node_modules/
+.venv/
+__pycache__/
+*.py[cod]
+# environment files: ignore real secrets, keep the template
+.env
+.env.*
+!.env.example
+# NOTE: .osdr_cache/ is intentionally TRACKED (NASA OSDR reference data)

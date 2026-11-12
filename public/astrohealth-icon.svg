@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <defs>
+    <linearGradient id="lensRingGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="35%" stop-color="#C2E0E1" />
+      <stop offset="65%" stop-color="#2D7D82" />
+      <stop offset="100%" stop-color="#0D223A" />
+    </linearGradient>
+    <radialGradient id="techBoardGrad" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#174A55" />
+      <stop offset="70%" stop-color="#0D223A" />
+      <stop offset="100%" stop-color="#081726" />
+    </radialGradient>
+    <filter id="tealGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <clipPath id="lensInnerClip">
+      <circle cx="80" cy="80" r="62" />
+    </clipPath>
+  </defs>
+  <circle cx="80" cy="80" r="74" fill="#2D7D82" opacity="0.12" filter="url(#tealGlow)" />
+  <circle cx="80" cy="80" r="68" fill="none" stroke="url(#lensRingGrad)" stroke-width="5" />
+  <circle cx="80" cy="80" r="64" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.4" />
+  <g clip-path="url(#lensInnerClip)">
+    <circle cx="80" cy="80" r="62" fill="url(#techBoardGrad)" />
+    <circle cx="80" cy="80" r="44" fill="none" stroke="#C2E0E1" stroke-width="1.5" stroke-dasharray="3 7" opacity="0.6" />
+    <circle cx="80" cy="80" r="54" fill="none" stroke="#2D7D82" stroke-width="1" opacity="0.3" />
+    <path d="M24 68 L60 68 M24 80 L60 80 M24 92 L60 92" stroke="#2D7D82" stroke-width="2.2" stroke-linecap="round" opacity="0.75" />
+    <path d="M100 72 L136 72 M100 88 L136 88" stroke="#C2E0E1" stroke-width="2.2" stroke-linecap="round" opacity="0.75" />
+    <path d="M80 32 L80 58 M80 102 L80 128" stroke="#2D7D82" stroke-width="2.2" stroke-linecap="round" opacity="0.75" />
+    <rect x="60" y="60" width="40" height="40" rx="8" fill="#0D223A" stroke="#2D7D82" stroke-width="2" />
+    <path d="M76 68 H84 V76 H92 V84 H84 V92 H76 V84 H68 V76 H76 Z" fill="#C2E0E1" opacity="0.95" />
+    <circle cx="80" cy="80" r="3" fill="#FFFFFF" />
+    <circle cx="80" cy="32" r="4.5" fill="#C2E0E1" filter="url(#tealGlow)" />
+    <circle cx="80" cy="128" r="4" fill="#2D7D82" filter="url(#tealGlow)" />
+    <circle cx="118" cy="36" r="4" fill="#C2E0E1" filter="url(#tealGlow)" />
+    <circle cx="136" cy="72" r="4" fill="#C2E0E1" filter="url(#tealGlow)" />
+  </g>
+  <path d="M58 56 A48 48 0 0 1 102 36" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" opacity="0.45" />
+</svg>
