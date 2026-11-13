@@ -10,7 +10,6 @@ import {
   Sliders,
   FileText,
   Globe,
-  Orbit,
 } from 'lucide-react';
 
 export type ActiveTab =
@@ -18,7 +17,6 @@ export type ActiveTab =
   | 'dna-telemetry'
   | 'food-printer'
   | 'nasa-logs'
-  | 'digital-twin'
   | 'risk-simulator';
 
 interface HeaderProps {
@@ -64,12 +62,6 @@ export const Header: React.FC<HeaderProps> = ({
       label: 'NASA Data Logs',
       label_ar: 'سجلات ناسا',
       icon: Database,
-    },
-    {
-      id: 'digital-twin',
-      label: t.digitalTwinTab,
-      label_ar: 'التوأم الرقمي',
-      icon: Orbit,
     },
   ];
 

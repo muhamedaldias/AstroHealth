@@ -14,7 +14,6 @@ import { GeneExpressionTable } from './components/GeneExpressionTable';
 import { RiskSimulatorModal } from './components/RiskSimulatorModal';
 import { RiskSimulatorPanel } from './components/RiskSimulatorPanel';
 import { FlightClearanceModal } from './components/FlightClearanceModal';
-import { DigitalTwinPanel } from './components/DigitalTwinPanel';
 import {
   ArrowRight,
   ShieldCheck,
@@ -285,18 +284,6 @@ export default function App() {
         {activeTab === 'risk-simulator' && (
           <div className="flex flex-col gap-6 animate-fade-in">
             <RiskSimulatorPanel astronaut={selectedAstronaut} lang={lang} />
-          </div>
-        )}
-
-        {/* TAB 6: DIGITAL TWIN - TRANSLATIONAL BODY SYSTEMS MAP */}
-        {activeTab === 'digital-twin' && (
-          <div className="flex flex-col gap-6 animate-fade-in">
-            <DigitalTwinPanel
-              astronaut={selectedAstronaut}
-              studies={studies}
-              syncStatus={studySyncStatus}
-              lang={lang}
-            />
           </div>
         )}
       </main>

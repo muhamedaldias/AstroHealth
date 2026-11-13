@@ -99,35 +99,6 @@ export interface TranslationDictionary {
   flightDossierTitle: string;
   printDossier: string;
   close: string;
-
-  // Digital Twin
-  digitalTwinTab: string;
-  digitalTwinTitle: string;
-  digitalTwinSubtitle: string;
-  digitalTwinSelectHotspot: string;
-  twinVitalsTitle: string;
-  twinVitalsSubtitle: string;
-  twinVitalsNote: string;
-  twinSimulatedTag: string;
-  twinSpaceDays: string;
-  twinRadiationMsv: string;
-  twinBoneLossIndex: string;
-  twinDnaDamageIndex: string;
-  twinDetailsTitle: string;
-  twinStudyIds: string;
-  twinLog2fc: string;
-  twinPValue: string;
-  twinUpRegulated: string;
-  twinDownRegulated: string;
-  twinGuidanceSkeletal: string;
-  twinGuidanceDna: string;
-  twinGuidanceExposure: string;
-  twinExposureStudies: string;
-  twinExposureSimulatedLabel: string;
-  twinStrongestResponse: string;
-  twinAwaitingSync: string;
-  twinProvenanceLabel: string;
-  twinProvenance: string;
 }
 
 export const translations: Record<Language, TranslationDictionary> = {
@@ -220,43 +191,6 @@ export const translations: Record<Language, TranslationDictionary> = {
     flightDossierTitle: 'Simulated Mission Health Summary',
     printDossier: 'Print / Save Summary',
     close: 'Close',
-
-    digitalTwinTab: 'Digital Twin',
-    digitalTwinTitle: 'Digital Twin - Translational Body Systems Map',
-    digitalTwinSubtitle:
-      'Interactive holographic mapping of verified NASA OSDR reference expression onto the selected astronaut simulated mission profile. Select a hotspot to inspect the underlying real study records.',
-    digitalTwinSelectHotspot:
-      'Select a hotspot node on the hologram to load its real NASA OSDR record set.',
-    twinVitalsTitle: 'Selected Astronaut Simulated Mission Vitals',
-    twinVitalsSubtitle: 'Simulated mission telemetry',
-    twinVitalsNote:
-      'Crew values are simulated mission telemetry from the AstroHealth AI scenario model. They are not measured astronaut dosimetry or clinical results.',
-    twinSimulatedTag: 'Simulated',
-    twinSpaceDays: 'Space days',
-    twinRadiationMsv: 'Cumulative radiation (mSv)',
-    twinBoneLossIndex: 'Bone loss index (%)',
-    twinDnaDamageIndex: 'DNA damage index',
-    twinDetailsTitle: 'Active System Hotspot Details',
-    twinStudyIds: 'Real NASA OSDR studies',
-    twinLog2fc: 'log2FC',
-    twinPValue: 'p',
-    twinUpRegulated: 'Up-regulated',
-    twinDownRegulated: 'Down-regulated',
-    twinGuidanceSkeletal:
-      'Preventive guidance: use the simulated bone-loss index to prioritise review of a validated resistive and aerobic countermeasure plan with flight-medicine staff. The OSDR rodent values below are reference measurements; they do not set exercise loads or supplement doses for an individual crew member.',
-    twinGuidanceDna:
-      'Preventive guidance: use the simulated DNA damage index to prioritise review of radiation shielding, sleep and circadian scheduling, and cellular repair support with flight-medicine staff. The OSDR rodent values below are reference measurements, not individual astronaut blood results.',
-    twinGuidanceExposure:
-      'Preventive guidance: use the simulated space-day and cumulative radiation exposure to prioritise mission-limit and shielding reviews. The NASA OSDR studies listed below are real rodent spaceflight exposure records used as biological reference context only.',
-    twinExposureStudies: 'Real NASA OSDR spaceflight exposure studies',
-    twinExposureSimulatedLabel: 'Selected astronaut simulated exposure',
-    twinStrongestResponse:
-      'Each entry shows the strongest measured response (largest absolute log2FC) in that real OSDR study. Values are study-level mouse measurements, not human astronaut outcomes.',
-    twinAwaitingSync:
-      'Awaiting NASA OSDR study sync. No biological values are displayed until verified study records are loaded.',
-    twinProvenanceLabel: 'Scientific provenance',
-    twinProvenance:
-      'Translational Simulation Model: Maps real reference gene expression from NASA OSDR (Mus musculus) studies onto simulated human astronaut telemetry for preventive risk visualization.',
   },
   ar: {
     switchLanguage: 'English',
@@ -347,42 +281,5 @@ export const translations: Record<Language, TranslationDictionary> = {
     flightDossierTitle: 'ملخص صحي لمهمة فضائية محاكاة',
     printDossier: 'طباعة / حفظ الملخص',
     close: 'إغلاق',
-
-    digitalTwinTab: 'التوأم الرقمي',
-    digitalTwinTitle: 'التوأم الرقمي - خريطة ترجمية لأجهزة الجسم',
-    digitalTwinSubtitle:
-      'عرض تفاعلي هولوغرافي لتعبير الجينات المرجعي الموثق من ناسا OSDR على ملف مهمة رائد الفضاء المحدد (محاكاة). اختر نقطة اتصال لعرض سجلات الدراسات الحقيقية المرتبطة بها.',
-    digitalTwinSelectHotspot:
-      'اختر نقطة اتصال على الصورة الهولوغرافية لعرض سجلات دراسات ناسا OSDR الحقيقية.',
-    twinVitalsTitle: 'قياسات مهمة رائد الفضاء المحدد (محاكاة)',
-    twinVitalsSubtitle: 'قياسات مهمة فضائية محاكاة',
-    twinVitalsNote:
-      'قيم الطاقم هي قياسات مهمة محاكاة من نموذج سيناريو AstroHealth AI، وليست قياسات إشعاعية مقاسة لرواد الفضاء أو نتائج سريرية.',
-    twinSimulatedTag: 'محاكاة',
-    twinSpaceDays: 'أيام في الفضاء',
-    twinRadiationMsv: 'الإشعاع التراكمي (mSv)',
-    twinBoneLossIndex: 'مؤشر فقدان العظم (%)',
-    twinDnaDamageIndex: 'مؤشر تلف الحمض النووي',
-    twinDetailsTitle: 'تفاصيل نقطة النظام النشط',
-    twinStudyIds: 'دراسات ناسا OSDR الحقيقية',
-    twinLog2fc: 'log2FC',
-    twinPValue: 'p',
-    twinUpRegulated: 'مرتفع التنظيم',
-    twinDownRegulated: 'منخفض التنظيم',
-    twinGuidanceSkeletal:
-      'إرشاد وقائي: استخدم مؤشر فقدان العظم المحاكى لترتيب مراجعة خطة معتمدة للتمارين المقاومة والهوائية مع فريق طب الطيران. قيم OSDR للفئران أدناه قياسات مرجعية، وهي لا تحدد أحمال التمارين أو جرعات المكملات لفرد من الطاقم.',
-    twinGuidanceDna:
-      'إرشاد وقائي: استخدم مؤشر تلف الحمض النووي المحاكى لترتيب مراجعة درع الإشعاع وجداول النوم والسير اليوماوي ودعم ترميم الخلايا مع فريق طب الطيران. قيم OSDR للفئران أدناه قياسات مرجعية، وليست نتائج دم فردية لرائد فضاء.',
-    twinGuidanceExposure:
-      'إرشاد وقائي: استخدم أيام الفضاء والإشعاع التراكمي المحاكى لترتيب مراجعة حدود المهمة والدرع الإشعاعي. دراسات ناسا OSDR المدرجة أدناه سجلات حقيقية لتعرض الفئران في بيئات انعدام الجاذبية، تُستخدم كسياق بيولوجي مرجعي فقط.',
-    twinExposureStudies: 'دراسات ناسا OSDR الحقيقية لتعرض انعدام الجاذبية',
-    twinExposureSimulatedLabel: 'تعرض رائد الفضاء المحدد (محاكاة)',
-    twinStrongestResponse:
-      'يعرض كل مدخل أقوى استجابة مقاسة (أكبر قيمة مطلقة لـ log2FC) في تلك الدراسة الحقيقية. القيم قياسات على مستوى الدراسة في الفئران، وليست نتائج بشرية.',
-    twinAwaitingSync:
-      'بانتظار مزامنة دراسات ناسا OSDR. لا تُعرض أي قيم حيوية قبل تحميل سجلات الدراسات الموثقة.',
-    twinProvenanceLabel: 'المصدر العلمي',
-    twinProvenance:
-      'نموذج المحاكاة الترجمي: يربط تعبير الجينات المرجعي الحقيقي من دراسات ناسا OSDR (Mus musculus) بقياسات رواد الفضاء البشريين المحاكاة لتصور المخاطر الوقائي.',
   },
 };
