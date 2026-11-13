@@ -23,3 +23,13 @@ Thumbs.db
 # agent tooling state (session-local, never tracked)
 .mimosa/
 .omo/
+
+# astrohealth ai frontend (added by frontend-data upload)
+# strict dependency / build / runtime ignores
+dist/
+dist-ssr/
+*.py[cod]
+# environment files: ignore real secrets, keep the template
+.env.*
+!.env.example
+# NOTE: .osdr_cache/ is intentionally TRACKED (NASA OSDR reference data)
