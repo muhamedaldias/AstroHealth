@@ -6,6 +6,7 @@ export interface TranslationDictionary {
   exportFlightReport: string;
   simulationMode: string;
   simulatedMissionTelemetry: string;
+  disclaimer: string;
   osdrStudiesReady: string;
   osdrStudiesSyncing: string;
   osdrStudiesCached: string;
@@ -107,6 +108,8 @@ export const translations: Record<Language, TranslationDictionary> = {
     exportFlightReport: "Export Simulation Summary",
     simulationMode: "Risk Simulation Engine",
     simulatedMissionTelemetry: "Simulated Mission Telemetry",
+    disclaimer:
+      "Research prototype built for a hackathon. Not a medical device. Outputs are decision support for a qualified flight surgeon and must never replace clinical judgement.",
     osdrStudiesReady: "OSDR study references ready",
     osdrStudiesSyncing: "Loading cached OSDR studies…",
     osdrStudiesCached: "Showing available cached OSDR studies",
@@ -210,6 +213,8 @@ export const translations: Record<Language, TranslationDictionary> = {
     exportFlightReport: "تصدير ملخص المحاكاة",
     simulationMode: "محرك محاكاة المخاطر الفضائية",
     simulatedMissionTelemetry: "قياسات مهمة فضائية محاكاة",
+    disclaimer:
+      "نموذج بحثي بُني لتحدي الهاكاثون. ليس جهازاً طبياً. المخرجات أداة دعم قرار لطبيب طيران مؤهل ولا تُغني أبداً عن الحكم السريري.",
     osdrStudiesReady: "مراجع دراسات OSDR جاهزة",
     osdrStudiesSyncing: "جارٍ تحميل دراسات OSDR المخزنة…",
     osdrStudiesCached: "عرض دراسات OSDR المخزنة المتاحة",
