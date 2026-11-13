@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Astro Bone Twin API
-  version: 0.1.0
+  version: 0.1.1
   description: |
     SINGLE SOURCE OF TRUTH for every data shape in this project.
 
@@ -350,7 +350,9 @@ components:
       properties:
         mission_day: { type: integer, minimum: -365, maximum: 1500 }
         marker: { $ref: "#/components/schemas/MarkerId" }
-        value: { type: number, minimum: 0 }
+        # maximum is a generous guard against non-finite values; physiological ranges
+        # are marker-specific and intentionally not encoded here
+        value: { type: number, minimum: 0, maximum: 1000000 }
 
     Measurement:
       type: object

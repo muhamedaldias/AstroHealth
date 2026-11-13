@@ -5,16 +5,9 @@ from datetime import UTC, datetime
 from bonetwin_contracts import Measurement, MeasurementCreate
 from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
+from twin_core import MARKER_UNITS
 
 from .db import MeasurementRow
-
-UNITS = {
-    "ctx": "ng/mL",
-    "p1np": "ng/mL",
-    "urine_calcium": "mmol/24h",
-    "vitamin_d_25oh": "nmol/L",
-    "pth": "pg/mL",
-}
 
 
 def _to_model(r: MeasurementRow) -> Measurement:
@@ -34,6 +27,9 @@ class MeasurementRepository:
         self._sessions = sessions
 
     def seed_if_empty(self, rows: list[Measurement]) -> None:
+        # Single-worker demo assumption: startup is the only seeder and the API runs
+        # one worker, so the check-then-insert race (two workers seeding twice) is
+        # accepted here in exchange for not locking or unique-constraining the seed.
         with self._sessions() as s, s.begin():
             if s.scalars(select(MeasurementRow).limit(1)).first() is not None:
                 return
@@ -65,7 +61,7 @@ class MeasurementRepository:
                 mission_day=body.mission_day,
                 marker=body.marker.value,
                 value=body.value,
-                unit=UNITS[body.marker.value],
+                unit=MARKER_UNITS[body.marker],
                 recorded_at=datetime.now(UTC),
             )
             s.add(row)

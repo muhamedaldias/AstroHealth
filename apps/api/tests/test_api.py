@@ -45,6 +45,17 @@ def test_measurement_validation_error_is_contract_error(client: TestClient) -> N
     assert c.Error.model_validate(r.json()).code == "validation_error"
 
 
+def test_measurement_value_rejects_non_finite(client: TestClient) -> None:
+    # 1e999 parses to float inf; httpx json= cannot send Infinity so we post raw bytes.
+    r = client.post(
+        "/api/v1/crew/crew-01/measurements",
+        content=b'{"marker":"ctx","mission_day":30,"value": 1e999}',
+        headers={"content-type": "application/json"},
+    )
+    assert r.status_code == 422
+    assert c.Error.model_validate(r.json()).code == "validation_error"
+
+
 def test_forecast(client: TestClient) -> None:
     r = client.post(
         "/api/v1/forecast",
@@ -57,6 +68,15 @@ def test_forecast(client: TestClient) -> None:
     assert r.status_code == 200
     f = c.Forecast.model_validate(r.json())
     assert f.horizon_days == 180 and f.countermeasure_ids == ["resistive_exercise"]
+
+
+def test_forecast_null_countermeasure_ids_is_validation_error(client: TestClient) -> None:
+    r = client.post(
+        "/api/v1/forecast",
+        json={"crew_id": "crew-01", "scenario_id": "iss-180", "countermeasure_ids": None},
+    )
+    assert r.status_code == 422
+    assert c.Error.model_validate(r.json()).code == "validation_error"
 
 
 def test_forecast_unknown_countermeasure(client: TestClient) -> None:

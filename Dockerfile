@@ -17,5 +17,8 @@ RUN uv sync --frozen --no-dev --package bonetwin-api
 COPY --from=web /repo/apps/web/dist ./apps/web/dist
 ENV BONETWIN_SERVE_WEB=true \
     BONETWIN_DATABASE_URL=sqlite:////repo/data/runtime/app.db
+# Non-root: the API only needs to write its sqlite db under /repo/data.
+RUN useradd --create-home appuser && chown -R appuser /repo
+USER appuser
 EXPOSE 8000
 CMD ["uv", "run", "--no-dev", "uvicorn", "bonetwin_api.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]

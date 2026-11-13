@@ -9,13 +9,7 @@ from __future__ import annotations
 import random
 from datetime import UTC, datetime, timedelta
 
-UNITS = {
-    "ctx": "ng/mL",
-    "p1np": "ng/mL",
-    "urine_calcium": "mmol/24h",
-    "vitamin_d_25oh": "nmol/L",
-    "pth": "pg/mL",
-}
+from ..markers import MARKER_UNITS
 
 SCENARIOS = [
     {
@@ -128,7 +122,7 @@ def measurements(seed: int = 7) -> list[dict]:
                         "mission_day": day,
                         "marker": marker,
                         "value": round(v, 3),
-                        "unit": UNITS[marker],
+                        "unit": MARKER_UNITS[marker],
                         "recorded_at": (base_time + timedelta(days=day + 30)).isoformat(),
                     }
                 )

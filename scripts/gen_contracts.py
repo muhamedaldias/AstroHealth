@@ -26,6 +26,20 @@ def run(cmd: list[str], cwd: Path = ROOT) -> None:
     subprocess.run(cmd, cwd=cwd, check=True)
 
 
+def gen_web_types() -> None:
+    """Regenerate apps/web/src/api/schema.d.ts. Requires the web deps to be installed.
+
+    Missing node_modules must fail loudly: silently skipping would leave stale TS
+    types in place and gen-check would report a false green.
+    """
+    npm = shutil.which("npm")
+    if npm and (WEB / "package.json").exists() and (WEB / "node_modules").exists():
+        run([npm, "run", "--silent", "gen:api"], cwd=WEB)
+    else:
+        print("! TypeScript types NOT regenerated — run: npm --prefix apps/web install", file=sys.stderr)
+        raise SystemExit(1)
+
+
 def main() -> int:
     run(
         [
@@ -46,16 +60,13 @@ def main() -> int:
             "--use-union-operator",
             "--use-annotated",
             "--field-constraints",
+            "--strict-nullable",
             "--disable-timestamp",
             "--enum-field-as-literal",
             "one",
         ]
     )
-    npm = shutil.which("npm")
-    if npm and (WEB / "package.json").exists() and (WEB / "node_modules").exists():
-        run([npm, "run", "--silent", "gen:api"], cwd=WEB)
-    else:
-        print("! skipped TypeScript types (run `npm install` in apps/web first)")
+    gen_web_types()
     run([sys.executable, str(ROOT / "scripts" / "gen_codeowners.py")])
     return 0
 

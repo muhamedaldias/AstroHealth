@@ -51,6 +51,7 @@ def test_engine_honours_contract(engine_name: str, inp: EngineInput) -> None:
 @pytest.mark.parametrize("engine_name", list_engines())
 def test_engine_is_deterministic(engine_name: str) -> None:
     eng, inp = get_engine(engine_name), _inputs()[0]
+    # generated_at is the one documented purity exception (stamped metadata, see protocol.py)
     a = eng.forecast(inp).model_dump(exclude={"generated_at"})
     b = eng.forecast(inp).model_dump(exclude={"generated_at"})
     assert a == b

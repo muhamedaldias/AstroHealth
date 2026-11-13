@@ -129,7 +129,7 @@ class CrewList(BaseModel):
 class MeasurementCreate(BaseModel):
     mission_day: Annotated[int, Field(ge=-365, le=1500)]
     marker: MarkerId
-    value: Annotated[float, Field(ge=0.0)]
+    value: Annotated[float, Field(ge=0.0, le=1000000.0)]
 
 
 class Measurement(BaseModel):
@@ -149,7 +149,7 @@ class MeasurementList(BaseModel):
 class ForecastRequest(BaseModel):
     crew_id: str
     scenario_id: str
-    countermeasure_ids: list[str] | None = []
+    countermeasure_ids: list[str] = []
 
 
 class ForecastPoint(BaseModel):
