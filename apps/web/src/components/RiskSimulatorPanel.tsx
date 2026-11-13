@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Astronaut, Language } from '../types';
-import { translations } from '../i18n/translations';
-import { computeRisks } from '../data/nasaGeneLabData';
-import { X, RefreshCw, Cpu } from 'lucide-react';
+import { Cpu, RefreshCw, X } from "lucide-react";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { computeRisks } from "../data/nasaGeneLabData";
+import { translations } from "../i18n/translations";
+import type { Astronaut, Language } from "../types";
 
 interface RiskSimulatorPanelProps {
   astronaut: Astronaut;
@@ -23,7 +24,7 @@ export const RiskSimulatorPanel: React.FC<RiskSimulatorPanelProps> = ({
   useEffect(() => {
     setDays(astronaut.space_days);
     setRadiation(astronaut.radiation_msv);
-  }, [astronaut.id, astronaut.space_days, astronaut.radiation_msv]);
+  }, [astronaut.space_days, astronaut.radiation_msv]);
 
   const simResult = computeRisks(days, radiation);
 
@@ -52,6 +53,7 @@ export const RiskSimulatorPanel: React.FC<RiskSimulatorPanelProps> = ({
 
         {onClose && (
           <button
+            type="button"
             onClick={onClose}
             className="p-1.5 rounded-xl text-brand-400 hover:text-brand-700 hover:bg-brand-200/40 transition"
             aria-label={t.close}
@@ -66,7 +68,9 @@ export const RiskSimulatorPanel: React.FC<RiskSimulatorPanelProps> = ({
         <div className="flex flex-col gap-2 p-3.5 rounded-2xl bg-white/45 border border-brand-500/15">
           <div className="flex items-center justify-between">
             <span className="text-slate-700 font-semibold">{t.simSpaceDaysSlider}</span>
-            <span className="text-brand-700 font-bold text-sm">{days} {lang === 'ar' ? 'يوم' : 'Days'}</span>
+            <span className="text-brand-700 font-bold text-sm">
+              {days} {lang === "ar" ? "يوم" : "Days"}
+            </span>
           </div>
           <input
             type="range"
@@ -117,7 +121,9 @@ export const RiskSimulatorPanel: React.FC<RiskSimulatorPanelProps> = ({
         </div>
 
         <div className="flex flex-col gap-1 p-2.5 rounded-xl bg-white/60 border border-brand-500/15 shadow-sm">
-          <span className="text-[11px] text-slate-500 leading-tight">{t.simProjectedDnaDamage}</span>
+          <span className="text-[11px] text-slate-500 leading-tight">
+            {t.simProjectedDnaDamage}
+          </span>
           <span className="font-bold text-base text-amber-600">
             {simResult.dna_damage_index}/100
           </span>
@@ -133,6 +139,7 @@ export const RiskSimulatorPanel: React.FC<RiskSimulatorPanelProps> = ({
 
       <div className="flex justify-end pt-3 border-t border-brand-500/10 mt-1">
         <button
+          type="button"
           onClick={handleReset}
           className="px-3.5 py-2 rounded-xl bg-white/50 hover:bg-brand-200/40 border border-brand-500/15 text-brand-700 text-xs font-semibold flex items-center gap-1.5 transition"
         >

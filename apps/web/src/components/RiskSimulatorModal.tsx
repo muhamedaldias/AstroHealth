@@ -1,6 +1,6 @@
-import React from 'react';
-import { Astronaut, Language } from '../types';
-import { RiskSimulatorPanel } from './RiskSimulatorPanel';
+import type React from "react";
+import type { Astronaut, Language } from "../types";
+import { RiskSimulatorPanel } from "./RiskSimulatorPanel";
 
 interface RiskSimulatorModalProps {
   isOpen: boolean;

@@ -1,26 +1,26 @@
-import React from 'react';
-import { Language } from '../types';
+import type React from "react";
+import type { Language } from "../types";
 
 interface AstroLogoProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg' | 'nav';
+  size?: "sm" | "md" | "lg" | "nav";
   showText?: boolean;
   lang?: Language;
   harmonized?: boolean;
 }
 
 export const AstroLogo: React.FC<AstroLogoProps> = ({
-  className = '',
-  size = 'md',
+  className = "",
+  size = "md",
   showText = true,
-  lang = 'en',
+  lang = "en",
   harmonized = false,
 }) => {
   const sizeMap = {
-    sm: { imgHeight: 38, title: 'text-base', sub: 'text-[10px]' },
-    md: { imgHeight: 46, title: 'text-lg', sub: 'text-xs' },
-    lg: { imgHeight: 60, title: 'text-2xl', sub: 'text-sm' },
-    nav: { imgHeight: 56, title: 'text-base', sub: 'text-[10px]' },
+    sm: { imgHeight: 38, title: "text-base", sub: "text-[10px]" },
+    md: { imgHeight: 46, title: "text-lg", sub: "text-xs" },
+    lg: { imgHeight: 60, title: "text-2xl", sub: "text-sm" },
+    nav: { imgHeight: 56, title: "text-base", sub: "text-[10px]" },
   };
 
   const currentSize = sizeMap[size];
@@ -30,7 +30,7 @@ export const AstroLogo: React.FC<AstroLogoProps> = ({
       {/* Official AstroHealth AI Shield Emblem */}
       <div
         className={`relative flex items-center justify-center shrink-0 ${
-          harmonized ? 'isolate' : ''
+          harmonized ? "isolate" : ""
         }`}
       >
         {harmonized && (
@@ -39,7 +39,7 @@ export const AstroLogo: React.FC<AstroLogoProps> = ({
             className="pointer-events-none absolute inset-0 z-0 scale-125 rounded-full blur-md"
             style={{
               background:
-                'radial-gradient(circle at center, rgba(45, 125, 130, 0.30) 0%, rgba(13, 34, 58, 0.16) 55%, transparent 75%)',
+                "radial-gradient(circle at center, rgba(45, 125, 130, 0.30) 0%, rgba(13, 34, 58, 0.16) 55%, transparent 75%)",
             }}
           />
         )}
@@ -47,17 +47,15 @@ export const AstroLogo: React.FC<AstroLogoProps> = ({
           src="/logo.png"
           alt="AstroHealth AI shield emblem"
           height={currentSize.imgHeight}
-          className={harmonized ? 'relative z-10' : undefined}
+          className={harmonized ? "relative z-10" : undefined}
           style={{
             height: currentSize.imgHeight,
-            width: 'auto',
-            display: 'block',
+            width: "auto",
+            display: "block",
             /* blend transparent PNG cleanly over white/light header background */
-            mixBlendMode: 'multiply',
-            imageRendering: 'auto',
-            filter: harmonized
-              ? 'drop-shadow(0 2px 8px rgba(45, 125, 130, 0.35))'
-              : undefined,
+            mixBlendMode: "multiply",
+            imageRendering: "auto",
+            filter: harmonized ? "drop-shadow(0 2px 8px rgba(45, 125, 130, 0.35))" : undefined,
           }}
           draggable={false}
         />
@@ -66,14 +64,14 @@ export const AstroLogo: React.FC<AstroLogoProps> = ({
             aria-hidden
             className="pointer-events-none absolute inset-0 z-20 rounded-md bg-gradient-to-br from-[#2D7D82] to-[#174A55] opacity-[0.14] mix-blend-color"
             style={{
-              WebkitMaskImage: 'url(/logo.png)',
-              maskImage: 'url(/logo.png)',
-              WebkitMaskSize: 'contain',
-              maskSize: 'contain',
-              WebkitMaskPosition: 'center',
-              maskPosition: 'center',
-              WebkitMaskRepeat: 'no-repeat',
-              maskRepeat: 'no-repeat',
+              WebkitMaskImage: "url(/logo.png)",
+              maskImage: "url(/logo.png)",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
             }}
           />
         )}
@@ -96,7 +94,7 @@ export const AstroLogo: React.FC<AstroLogoProps> = ({
             className={`text-slate-500 font-normal ${currentSize.sub} mt-0.5 flex items-center gap-1.5`}
           >
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
-            {lang === 'ar' ? 'منصة الرصد الجيني والطب الفضائي' : 'Space-Health & Bio-Nutrition'}
+            {lang === "ar" ? "منصة الرصد الجيني والطب الفضائي" : "Space-Health & Bio-Nutrition"}
           </span>
         </div>
       )}

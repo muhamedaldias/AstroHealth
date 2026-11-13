@@ -18,3 +18,19 @@ export const useForecast = (crewId: string, scenarioId: string, countermeasureId
         }),
       ),
   });
+
+export const useTelemetryCrew = () =>
+  useQuery({
+    queryKey: ["telemetry-crew"],
+    queryFn: async () => {
+      const payload = unwrap(await api.GET("/api/v1/telemetry/crew"));
+      return payload.crew;
+    },
+  });
+
+export const useOsdrStudies = () =>
+  useQuery({
+    queryKey: ["osdr-studies"],
+    queryFn: async () => unwrap(await api.GET("/api/v1/osdr/studies")),
+    refetchInterval: (query) => (query.state.data?.sync_status === "syncing" ? 2500 : false),
+  });

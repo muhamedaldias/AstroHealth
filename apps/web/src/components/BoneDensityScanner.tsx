@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Astronaut, Language } from '../types';
-import { translations } from '../i18n/translations';
-import { Bone, TrendingDown } from 'lucide-react';
+import { Bone, TrendingDown } from "lucide-react";
+import type React from "react";
+import { useState } from "react";
+import { translations } from "../i18n/translations";
+import type { Astronaut, Language } from "../types";
 
 interface BoneDensityScannerProps {
   astronaut: Astronaut;
@@ -10,12 +11,21 @@ interface BoneDensityScannerProps {
 
 export const BoneDensityScanner: React.FC<BoneDensityScannerProps> = ({ astronaut, lang }) => {
   const t = translations[lang];
-  const [activeTab, setActiveTab] = useState<'crossSection' | 'cellular'>('crossSection');
+  const [activeTab, setActiveTab] = useState<"crossSection" | "cellular">("crossSection");
 
   const earthBvTv = 26.5;
-  const currentBvTv = Math.max(12.0, Number((earthBvTv * (1 - astronaut.bone_loss_risk_percentage / 100)).toFixed(1)));
-  const osteoblastActivity = Math.max(25, Math.round(100 - astronaut.bone_loss_risk_percentage * 1.8));
-  const osteoclastActivity = Math.min(190, Math.round(100 + astronaut.bone_loss_risk_percentage * 2.2));
+  const currentBvTv = Math.max(
+    12.0,
+    Number((earthBvTv * (1 - astronaut.bone_loss_risk_percentage / 100)).toFixed(1)),
+  );
+  const osteoblastActivity = Math.max(
+    25,
+    Math.round(100 - astronaut.bone_loss_risk_percentage * 1.8),
+  );
+  const osteoclastActivity = Math.min(
+    190,
+    Math.round(100 + astronaut.bone_loss_risk_percentage * 2.2),
+  );
 
   return (
     <div className="glass-panel rounded-3xl p-6 flex flex-col gap-5">
@@ -39,29 +49,31 @@ export const BoneDensityScanner: React.FC<BoneDensityScannerProps> = ({ astronau
         {/* View Toggle */}
         <div className="flex items-center gap-1 bg-white/40 backdrop-blur-sm p-1 rounded-xl border border-brand-500/15 text-xs font-medium">
           <button
-            onClick={() => setActiveTab('crossSection')}
+            type="button"
+            onClick={() => setActiveTab("crossSection")}
             className={`px-3 py-1.5 rounded-lg transition ${
-              activeTab === 'crossSection'
-                ? 'bg-white text-brand-700 font-semibold shadow-sm border border-brand-300/60'
-                : 'text-slate-500 hover:text-brand-700'
+              activeTab === "crossSection"
+                ? "bg-white text-brand-700 font-semibold shadow-sm border border-brand-300/60"
+                : "text-slate-500 hover:text-brand-700"
             }`}
           >
-            {lang === 'ar' ? 'المقطع العرضي المجهري' : 'Trabecular Cross-Section'}
+            {lang === "ar" ? "المقطع العرضي المجهري" : "Trabecular Cross-Section"}
           </button>
           <button
-            onClick={() => setActiveTab('cellular')}
+            type="button"
+            onClick={() => setActiveTab("cellular")}
             className={`px-3 py-1.5 rounded-lg transition ${
-              activeTab === 'cellular'
-                ? 'bg-white text-brand-700 font-semibold shadow-sm border border-brand-300/60'
-                : 'text-slate-500 hover:text-brand-700'
+              activeTab === "cellular"
+                ? "bg-white text-brand-700 font-semibold shadow-sm border border-brand-300/60"
+                : "text-slate-500 hover:text-brand-700"
             }`}
           >
-            {lang === 'ar' ? 'توازن الخلايا البانية/الهادمة' : 'Osteoblast/Clast Ratio'}
+            {lang === "ar" ? "توازن الخلايا البانية/الهادمة" : "Osteoblast/Clast Ratio"}
           </button>
         </div>
       </div>
 
-      {activeTab === 'crossSection' ? (
+      {activeTab === "crossSection" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Earth 1G Baseline Visual */}
           <div className="bg-emerald-50/40 border border-emerald-200/70 rounded-2xl p-4 flex flex-col gap-3 relative">
@@ -71,23 +83,46 @@ export const BoneDensityScanner: React.FC<BoneDensityScannerProps> = ({ astronau
                 {t.earthBaseline1G}
               </span>
               <span className="text-emerald-700 font-bold">
-                {lang === 'ar' ? 'مؤشر T محاكى:' : 'Simulated T-score:'} {astronaut.baseline_bmd_t_score > 0 ? `+${astronaut.baseline_bmd_t_score}` : astronaut.baseline_bmd_t_score}
+                {lang === "ar" ? "مؤشر T محاكى:" : "Simulated T-score:"}{" "}
+                {astronaut.baseline_bmd_t_score > 0
+                  ? `+${astronaut.baseline_bmd_t_score}`
+                  : astronaut.baseline_bmd_t_score}
               </span>
             </div>
 
             <div className="h-36 rounded-xl bg-white border border-emerald-200 p-2 relative flex items-center justify-center overflow-hidden shadow-inner">
-              <svg className="w-full h-full opacity-85" viewBox="0 0 200 100" fill="none">
+              <svg
+                className="w-full h-full opacity-85"
+                viewBox="0 0 200 100"
+                fill="none"
+                aria-hidden="true"
+              >
                 <defs>
                   <pattern id="denseMeshLight" width="14" height="14" patternUnits="userSpaceOnUse">
-                    <path d="M 0 7 L 7 0 L 14 7 L 7 14 Z" fill="none" stroke="#10B981" strokeWidth="1.8" />
+                    <path
+                      d="M 0 7 L 7 0 L 14 7 L 7 14 Z"
+                      fill="none"
+                      stroke="#10B981"
+                      strokeWidth="1.8"
+                    />
                     <circle cx="7" cy="7" r="2" fill="#059669" />
                   </pattern>
                 </defs>
                 <rect width="200" height="100" fill="url(#denseMeshLight)" rx="6" />
-                <rect x="5" y="5" width="190" height="90" stroke="#10B981" strokeWidth="1.5" fill="none" strokeDasharray="4 2" opacity="0.4" />
+                <rect
+                  x="5"
+                  y="5"
+                  width="190"
+                  height="90"
+                  stroke="#10B981"
+                  strokeWidth="1.5"
+                  fill="none"
+                  strokeDasharray="4 2"
+                  opacity="0.4"
+                />
               </svg>
               <div className="absolute bottom-2 left-3 text-[10px] font-medium text-emerald-800 bg-white/95 px-2.5 py-0.5 rounded-full border border-emerald-200 shadow-sm">
-                {lang === 'ar' ? 'شبكة كثيفة توضيحية' : 'Illustrative Dense Matrix'}
+                {lang === "ar" ? "شبكة كثيفة توضيحية" : "Illustrative Dense Matrix"}
               </div>
             </div>
 
@@ -105,15 +140,32 @@ export const BoneDensityScanner: React.FC<BoneDensityScannerProps> = ({ astronau
                 {t.microgravityDegradation}
               </span>
               <span className="text-rose-700 font-bold">
-                {lang === 'ar' ? 'مؤشر T محاكى:' : 'Simulated T-score:'} {astronaut.current_bmd_t_score}
+                {lang === "ar" ? "مؤشر T محاكى:" : "Simulated T-score:"}{" "}
+                {astronaut.current_bmd_t_score}
               </span>
             </div>
 
             <div className="h-36 rounded-xl bg-white border border-rose-200 p-2 relative flex items-center justify-center overflow-hidden shadow-inner">
-              <svg className="w-full h-full opacity-80" viewBox="0 0 200 100" fill="none">
+              <svg
+                className="w-full h-full opacity-80"
+                viewBox="0 0 200 100"
+                fill="none"
+                aria-hidden="true"
+              >
                 <defs>
-                  <pattern id="porousMeshLight" width="28" height="28" patternUnits="userSpaceOnUse">
-                    <path d="M 0 14 L 14 0 L 28 14 L 14 28 Z" fill="none" stroke="#F43F5E" strokeWidth="1" strokeDasharray="3 3" />
+                  <pattern
+                    id="porousMeshLight"
+                    width="28"
+                    height="28"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <path
+                      d="M 0 14 L 14 0 L 28 14 L 14 28 Z"
+                      fill="none"
+                      stroke="#F43F5E"
+                      strokeWidth="1"
+                      strokeDasharray="3 3"
+                    />
                     <circle cx="14" cy="14" r="1.5" fill="#E11D48" />
                   </pattern>
                 </defs>
@@ -125,7 +177,9 @@ export const BoneDensityScanner: React.FC<BoneDensityScannerProps> = ({ astronau
               <div className="absolute bottom-2 left-3 text-[10px] font-semibold text-rose-800 bg-white/95 px-2.5 py-0.5 rounded-full border border-rose-200 flex items-center gap-1 shadow-sm">
                 <TrendingDown className="w-3 h-3 text-rose-600" />
                 <span>
-                  {lang === 'ar' ? `مؤشر محاكاة: -${astronaut.bone_loss_risk_percentage}%` : `Scenario index: -${astronaut.bone_loss_risk_percentage}%`}
+                  {lang === "ar"
+                    ? `مؤشر محاكاة: -${astronaut.bone_loss_risk_percentage}%`
+                    : `Scenario index: -${astronaut.bone_loss_risk_percentage}%`}
                 </span>
               </div>
             </div>
@@ -151,7 +205,9 @@ export const BoneDensityScanner: React.FC<BoneDensityScannerProps> = ({ astronau
                   style={{ width: `${osteoblastActivity}%` }}
                 />
               </div>
-              <span className="text-[11px] text-slate-500 leading-snug">{t.simulatedScenarioNote}</span>
+              <span className="text-[11px] text-slate-500 leading-snug">
+                {t.simulatedScenarioNote}
+              </span>
             </div>
 
             <div className="flex flex-col gap-2 p-3.5 rounded-xl bg-white/50 border border-brand-500/15 shadow-sm">
@@ -165,7 +221,9 @@ export const BoneDensityScanner: React.FC<BoneDensityScannerProps> = ({ astronau
                   style={{ width: `${Math.min(100, osteoclastActivity / 2)}%` }}
                 />
               </div>
-              <span className="text-[11px] text-slate-500 leading-snug">{t.simulatedScenarioNote}</span>
+              <span className="text-[11px] text-slate-500 leading-snug">
+                {t.simulatedScenarioNote}
+              </span>
             </div>
           </div>
 

@@ -1,1 +1,143 @@
 @import "tailwindcss";
+
+/* Design tokens ported from the Tailwind v3 config (tailwind.config.js) to the
+   Tailwind v4 CSS-first @theme format. Utility names are unchanged:
+   brand-*, accent(-light/-deep/-navy), font-sans/font-arabic,
+   shadow-soft(-md/-lg)/shadow-teal-glow, animate-spin-slow. */
+@theme {
+  /* Brand palette */
+  --color-brand-50: #eef7f7;
+  --color-brand-100: #dcedee;
+  --color-brand-200: #c2e0e1;
+  --color-brand-300: #8cc0c2;
+  --color-brand-400: #2d7d82;
+  --color-brand-500: #236a6f;
+  --color-brand-600: #174a55;
+  --color-brand-700: #0d223a;
+  --color-brand-800: #081726;
+
+  /* Accent */
+  --color-accent-light: #c2e0e1;
+  --color-accent: #2d7d82;
+  --color-accent-deep: #236a6f;
+  --color-accent-navy: #0d223a;
+
+  /* Typography */
+  --font-sans: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font-arabic: "Cairo", sans-serif;
+
+  /* Shadows */
+  --shadow-soft: 0 2px 10px -2px rgba(13, 34, 58, 0.06), 0 1px 3px -1px rgba(13, 34, 58, 0.04);
+  --shadow-soft-md: 0 6px 20px -4px rgba(13, 34, 58, 0.1), 0 2px 6px -2px rgba(13, 34, 58, 0.05);
+  --shadow-soft-lg: 0 12px 30px -6px rgba(13, 34, 58, 0.12), 0 4px 10px -3px rgba(13, 34, 58, 0.06);
+  --shadow-teal-glow: 0 0 18px -2px rgba(45, 125, 130, 0.35);
+
+  /* Animations */
+  --animate-spin-slow: spin-slow 14s linear infinite;
+
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+@layer base {
+  body {
+    background-color: #f4f8fa;
+    background-image:
+      radial-gradient(1100px 620px at 8% -8%, rgba(45, 125, 130, 0.1), transparent 60%),
+      radial-gradient(900px 520px at 100% 0%, rgba(13, 34, 58, 0.12), transparent 58%),
+      radial-gradient(800px 520px at 50% 110%, rgba(13, 34, 58, 0.06), transparent 60%);
+    background-attachment: fixed;
+    color: #0d223a;
+    font-family:
+      "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif;
+  }
+
+  [dir="rtl"] body,
+  [dir="rtl"] {
+    font-family: "Cairo", sans-serif;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/60 backdrop-blur-xl backdrop-saturate-150 border border-white/60;
+    box-shadow:
+      0 12px 36px -14px rgba(13, 34, 58, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .glass-card {
+    @apply bg-white/55 backdrop-blur-xl backdrop-saturate-150 border border-white/60;
+    box-shadow:
+      0 8px 26px -12px rgba(13, 34, 58, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  }
+}
+
+/* Clean, modern light scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e8eff2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8fbcc0;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0d223a;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Print only the flight dossier when exporting/saving as PDF */
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .print-dossier,
+  .print-dossier * {
+    visibility: visible;
+  }
+
+  .print-dossier {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

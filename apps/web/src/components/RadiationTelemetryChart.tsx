@@ -1,14 +1,17 @@
-import React from 'react';
-import { Astronaut, Language } from '../types';
-import { translations } from '../i18n/translations';
-import { Radio } from 'lucide-react';
+import { Radio } from "lucide-react";
+import type React from "react";
+import { translations } from "../i18n/translations";
+import type { Astronaut, Language } from "../types";
 
 interface RadiationTelemetryChartProps {
   astronaut: Astronaut;
   lang: Language;
 }
 
-export const RadiationTelemetryChart: React.FC<RadiationTelemetryChartProps> = ({ astronaut, lang }) => {
+export const RadiationTelemetryChart: React.FC<RadiationTelemetryChartProps> = ({
+  astronaut,
+  lang,
+}) => {
   const t = translations[lang];
 
   const maxDays = Math.max(600, astronaut.space_days + 80);
@@ -37,9 +40,12 @@ export const RadiationTelemetryChart: React.FC<RadiationTelemetryChartProps> = (
 
   const pathD = points.reduce((acc, pt, idx) => {
     return idx === 0 ? `M ${pt.x} ${pt.y}` : `${acc} L ${pt.x} ${pt.y}`;
-  }, '');
+  }, "");
 
-  const areaD = `${pathD} L ${points[points.length - 1].x} ${svgHeight - paddingY} L ${paddingX} ${svgHeight - paddingY} Z`;
+  const lastPoint = points.at(-1);
+  const areaD = lastPoint
+    ? `${pathD} L ${lastPoint.x} ${svgHeight - paddingY} L ${paddingX} ${svgHeight - paddingY} Z`
+    : "";
 
   return (
     <div className="glass-panel rounded-3xl p-6 flex flex-col gap-5">
@@ -60,7 +66,10 @@ export const RadiationTelemetryChart: React.FC<RadiationTelemetryChartProps> = (
         </div>
 
         <div className="flex items-center gap-3 text-xs">
-          <span className="text-slate-500">{t.doseRateMsvPerDay}: {(astronaut.radiation_msv / Math.max(astronaut.space_days, 1)).toFixed(2)} mSv/day</span>
+          <span className="text-slate-500">
+            {t.doseRateMsvPerDay}:{" "}
+            {(astronaut.radiation_msv / Math.max(astronaut.space_days, 1)).toFixed(2)} mSv/day
+          </span>
           <span className="px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-semibold">
             {astronaut.radiation_msv} mSv
           </span>
@@ -69,7 +78,8 @@ export const RadiationTelemetryChart: React.FC<RadiationTelemetryChartProps> = (
 
       {/* Clean Light SVG Chart */}
       <div className="relative w-full rounded-2xl bg-white/40 border border-brand-500/15 p-2 overflow-hidden shadow-inner">
-        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="w-full h-44">
+        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="w-full h-44" role="img">
+          <title>{t.radiationTelemetryTitle}</title>
           <defs>
             <linearGradient id="radAreaGradLight" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.25" />
@@ -83,9 +93,33 @@ export const RadiationTelemetryChart: React.FC<RadiationTelemetryChartProps> = (
           </defs>
 
           {/* Grid lines */}
-          <line x1={paddingX} y1={svgHeight - paddingY} x2={svgWidth - paddingX} y2={svgHeight - paddingY} stroke="#CBD5E1" strokeWidth="1" />
-          <line x1={paddingX} y1={pelY} x2={svgWidth - paddingX} y2={pelY} stroke="#F43F5E" strokeWidth="1.2" strokeDasharray="4 3" opacity="0.8" />
-          <text x={svgWidth - paddingX} y={pelY - 5} fill="#BE123C" fontSize="10" fontFamily="sans-serif" fontWeight="600" textAnchor="end">
+          <line
+            x1={paddingX}
+            y1={svgHeight - paddingY}
+            x2={svgWidth - paddingX}
+            y2={svgHeight - paddingY}
+            stroke="#CBD5E1"
+            strokeWidth="1"
+          />
+          <line
+            x1={paddingX}
+            y1={pelY}
+            x2={svgWidth - paddingX}
+            y2={pelY}
+            stroke="#F43F5E"
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+            opacity="0.8"
+          />
+          <text
+            x={svgWidth - paddingX}
+            y={pelY - 5}
+            fill="#BE123C"
+            fontSize="10"
+            fontFamily="sans-serif"
+            fontWeight="600"
+            textAnchor="end"
+          >
             NASA PEL: 600 mSv
           </text>
 
@@ -94,25 +128,65 @@ export const RadiationTelemetryChart: React.FC<RadiationTelemetryChartProps> = (
           <path d={pathD} fill="none" stroke="url(#radLineGradLight)" strokeWidth="2.5" />
 
           {/* Current Astronaut Location Beacon */}
-          <line x1={currentX} y1={paddingY} x2={currentX} y2={svgHeight - paddingY} stroke="#2D7D82" strokeWidth="1.2" strokeDasharray="3 2" />
-          <circle cx={currentX} cy={currentY} r="7" fill="#2D7D82" opacity="0.2" className="animate-ping" />
-          <circle cx={currentX} cy={currentY} r="4" fill="#2D7D82" stroke="#FFFFFF" strokeWidth="1.5" />
+          <line
+            x1={currentX}
+            y1={paddingY}
+            x2={currentX}
+            y2={svgHeight - paddingY}
+            stroke="#2D7D82"
+            strokeWidth="1.2"
+            strokeDasharray="3 2"
+          />
+          <circle
+            cx={currentX}
+            cy={currentY}
+            r="7"
+            fill="#2D7D82"
+            opacity="0.2"
+            className="animate-ping"
+          />
+          <circle
+            cx={currentX}
+            cy={currentY}
+            r="4"
+            fill="#2D7D82"
+            stroke="#FFFFFF"
+            strokeWidth="1.5"
+          />
 
           {/* Current point label */}
-          <text x={currentX} y={Math.max(paddingY + 12, currentY - 10)} fill="#0F172A" fontSize="11" fontFamily="sans-serif" fontWeight="bold" textAnchor="middle">
+          <text
+            x={currentX}
+            y={Math.max(paddingY + 12, currentY - 10)}
+            fill="#0F172A"
+            fontSize="11"
+            fontFamily="sans-serif"
+            fontWeight="bold"
+            textAnchor="middle"
+          >
             Day {astronaut.space_days}: {astronaut.radiation_msv} mSv
           </text>
 
           {/* Axis markers */}
-          {points.map((pt, idx) => (
-            <text key={idx} x={pt.x} y={svgHeight - 8} fill="#64748B" fontSize="10" fontFamily="sans-serif" textAnchor="middle">
+          {points.map((pt) => (
+            <text
+              key={pt.day}
+              x={pt.x}
+              y={svgHeight - 8}
+              fill="#64748B"
+              fontSize="10"
+              fontFamily="sans-serif"
+              textAnchor="middle"
+            >
               {pt.day}d
             </text>
           ))}
         </svg>
 
         <div className="flex flex-wrap items-center justify-between text-xs text-slate-500 px-3 py-1.5 border-t border-brand-500/15">
-          <span className="px-2 py-1 rounded-full bg-white/50 text-brand-600 border border-brand-500/15">{t.simulatedMissionTelemetry}</span>
+          <span className="px-2 py-1 rounded-full bg-white/50 text-brand-600 border border-brand-500/15">
+            {t.simulatedMissionTelemetry}
+          </span>
           <span className="basis-full sm:basis-auto">{t.simulatedScenarioNote}</span>
         </div>
       </div>
