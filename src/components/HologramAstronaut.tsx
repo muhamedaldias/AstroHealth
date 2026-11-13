@@ -17,61 +17,174 @@ interface HologramAstronautProps {
   onSelectHotspot: (id: TwinHotspotId) => void;
 }
 
-const NAVY = '#0E233C';
-const NAVY_DEEP = '#0D223A';
+const NAVY = '#0D223A';
+const NAVY_DEEP = '#081726';
 const TEAL = '#2D7D82';
 const TEAL_LIGHT = '#8CC0C2';
 
+/** Radar instrument geometry (viewBox units). */
+const CENTER_X = 200;
+const CENTER_Y = 300;
+const RADAR_R = 176;
+const RING_RADII = [62, 98, 134, RADAR_R];
+
+/** Vertical DNA double helix geometry. */
+const HELIX_CX = 200;
+const HELIX_TOP = 152;
+const HELIX_BOTTOM = 448;
+const HELIX_AMP = 42;
+const HELIX_TURNS = 4;
+const HELIX_SAMPLES = 220;
+const RUNG_COUNT = 28;
+
 export const HOTSPOT_NODES: HotspotNode[] = [
   {
-    id: 'skeletal',
-    x: 170,
-    y: 372,
-    label: 'Skeletal System / Bone Density',
-    label_ar: 'الجهاز العظمي / كثافة العظم',
+    id: 'exposure',
+    x: CENTER_X,
+    y: CENTER_Y - RADAR_R,
+    label: 'Mission Radiation & Microgravity Exposure',
+    label_ar: 'التعرض للإشعاع وانعدام الجاذبية',
   },
   {
     id: 'dna',
-    x: 200,
-    y: 214,
+    x: CENTER_X,
+    y: CENTER_Y,
     label: 'Cellular DNA & Oxidative Repair',
     label_ar: 'الحمض النووي والإصلاح التأكسدي',
   },
   {
-    id: 'exposure',
-    x: 200,
-    y: 76,
-    label: 'Mission Radiation & Microgravity Exposure',
-    label_ar: 'التعرض للإشعاع وانعدام الجاذبية',
+    id: 'skeletal',
+    x: CENTER_X,
+    y: CENTER_Y + RADAR_R,
+    label: 'Skeletal System / Bone Density',
+    label_ar: 'الجهاز العظمي / كثافة العظم',
   },
 ];
 
-const Wire = ({
-  points,
-  opacity = 0.75,
-  width = 1.6,
-  dash,
-}: {
-  points: string;
-  opacity?: number;
-  width?: number;
-  dash?: string;
-}) => (
-  <polyline
-    points={points}
-    fill="none"
-    stroke={TEAL}
-    strokeWidth={width}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    opacity={opacity}
-    strokeDasharray={dash}
-  />
-);
+const toRad = (deg: number) => (deg * Math.PI) / 180;
 
-const Joint = ({ cx, cy, r = 4 }: { cx: number; cy: number; r?: number }) => (
-  <circle cx={cx} cy={cy} r={r} fill={NAVY_DEEP} stroke={TEAL} strokeWidth={1.4} opacity={0.95} />
-);
+interface HelixPoint {
+  x: number;
+  y: number;
+  depth: number;
+}
+
+const helixPoint = (t: number, strand: 0 | 1): HelixPoint => {
+  const y = HELIX_TOP + t * (HELIX_BOTTOM - HELIX_TOP);
+  const phi = t * HELIX_TURNS * Math.PI * 2 - Math.PI / 2;
+  const sinP = Math.sin(phi);
+  const cosP = Math.cos(phi);
+  return {
+    x: HELIX_CX + (strand === 0 ? 1 : -1) * HELIX_AMP * sinP,
+    y,
+    depth: strand === 0 ? cosP : -cosP,
+  };
+};
+
+/** Splits a backbone into front-facing (bright) and back-facing (dim) runs. */
+const buildStrand = (strand: 0 | 1) => {
+  const front: string[] = [];
+  const back: string[] = [];
+  let run: string[] = [];
+  let runIsFront: boolean | null = null;
+
+  for (let i = 0; i <= HELIX_SAMPLES; i++) {
+    const point = helixPoint(i / HELIX_SAMPLES, strand);
+    const isFront = point.depth >= 0;
+    if (runIsFront === null || isFront !== runIsFront) {
+      if (run.length > 1) (runIsFront ? front : back).push(run.join(' '));
+      run = [];
+      runIsFront = isFront;
+    }
+    run.push(`${point.x.toFixed(2)},${point.y.toFixed(2)}`);
+  }
+  if (run.length > 1) (runIsFront ? front : back).push(run.join(' '));
+
+  return { front, back };
+};
+
+const STRAND_A = buildStrand(0);
+const STRAND_B = buildStrand(1);
+
+interface Rung {
+  x1: number;
+  x2: number;
+  y: number;
+  opacity: number;
+}
+
+const RUNGS: Rung[] = (() => {
+  const rungs: Rung[] = [];
+  for (let i = 0; i < RUNG_COUNT; i++) {
+    const t = (i + 0.5) / RUNG_COUNT;
+    const a = helixPoint(t, 0);
+    const b = helixPoint(t, 1);
+    const separation = Math.abs(b.x - a.x);
+    if (separation < 5) continue;
+    rungs.push({
+      x1: a.x,
+      x2: b.x,
+      y: a.y,
+      opacity: 0.2 + 0.5 * Math.min(1, separation / (2 * HELIX_AMP)),
+    });
+  }
+  return rungs;
+})();
+
+/** Precision degree ticks around the outer radar ring. */
+const TICKS: Array<{ x1: number; y1: number; x2: number; y2: number; major: boolean }> = (() => {
+  const ticks: Array<{ x1: number; y1: number; x2: number; y2: number; major: boolean }> = [];
+  for (let deg = 0; deg < 360; deg += 5) {
+    const major = deg % 30 === 0;
+    const outer = RADAR_R;
+    const inner = RADAR_R - (major ? 11 : 5);
+    const rad = toRad(deg);
+    ticks.push({
+      x1: CENTER_X + outer * Math.sin(rad),
+      y1: CENTER_Y - outer * Math.cos(rad),
+      x2: CENTER_X + inner * Math.sin(rad),
+      y2: CENTER_Y - inner * Math.cos(rad),
+      major,
+    });
+  }
+  return ticks;
+})();
+
+/** Degree numerals, skipping the vertical axis where the nodes sit. */
+const DEGREE_LABELS: Array<{ x: number; y: number; label: string }> = (() => {
+  const labels: Array<{ x: number; y: number; label: string }> = [];
+  for (let deg = 0; deg < 360; deg += 30) {
+    if (deg === 90 || deg === 270) continue;
+    const rad = toRad(deg);
+    labels.push({
+      x: CENTER_X + 192 * Math.sin(rad),
+      y: CENTER_Y - 192 * Math.cos(rad),
+      label: `${deg}`,
+    });
+  }
+  return labels;
+})();
+
+/** Deterministic molecular sample points scattered across the scan disc. */
+const MOLECULE_SAMPLES: Array<{ x: number; y: number; r: number; opacity: number }> = (() => {
+  const points: Array<{ x: number; y: number; r: number; opacity: number }> = [];
+  let seed = 20260113;
+  const rand = () => {
+    seed = (seed * 1103515245 + 12345) % 2147483648;
+    return seed / 2147483648;
+  };
+  for (let i = 0; i < 30; i++) {
+    const angle = rand() * Math.PI * 2;
+    const radius = Math.sqrt(rand()) * (RADAR_R - 22);
+    points.push({
+      x: CENTER_X + radius * Math.cos(angle),
+      y: CENTER_Y + radius * Math.sin(angle),
+      r: 0.8 + rand() * 1.5,
+      opacity: 0.18 + rand() * 0.4,
+    });
+  }
+  return points;
+})();
 
 export const HologramAstronaut: React.FC<HologramAstronautProps> = ({
   lang,
@@ -83,22 +196,39 @@ export const HologramAstronaut: React.FC<HologramAstronautProps> = ({
       <svg
         viewBox="0 0 400 560"
         className="w-full h-auto select-none"
+        shapeRendering="geometricPrecision"
         role="img"
         aria-label={
           lang === 'ar'
-            ? 'صورة ظلية هولوغرافية لرائد فضاء مع نقاط-hotspot تفاعلية مرتبطة ببيانات ناسا OSDR'
-            : 'Holographic astronaut wireframe with interactive hotspots bound to NASA OSDR data'
+            ? 'رادار حيوي جزيئي هولوغرافي مع حلزون DNA مزدوج ونقاط-hotspot تفاعلية مرتبطة ببيانات ناسا OSDR'
+            : 'Biometric molecular radar hologram with a DNA double helix and interactive hotspots bound to NASA OSDR data'
         }
       >
         <defs>
-          <radialGradient id="twin-bg" cx="50%" cy="42%" r="58%">
+          <radialGradient id="twin-bg" cx="50%" cy="50%" r="62%">
             <stop offset="0%" stopColor="#174A55" stopOpacity="0.55" />
-            <stop offset="55%" stopColor={NAVY} stopOpacity="0.85" />
+            <stop offset="52%" stopColor={NAVY} stopOpacity="0.9" />
             <stop offset="100%" stopColor={NAVY_DEEP} stopOpacity="1" />
           </radialGradient>
-          <linearGradient id="twin-body" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={TEAL_LIGHT} stopOpacity="0.30" />
-            <stop offset="100%" stopColor={TEAL} stopOpacity="0.08" />
+          <linearGradient id="twin-beam" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor={TEAL_LIGHT} stopOpacity="0" />
+            <stop offset="50%" stopColor={TEAL_LIGHT} stopOpacity="0.9" />
+            <stop offset="100%" stopColor={TEAL_LIGHT} stopOpacity="0" />
+          </linearGradient>
+          <radialGradient id="twin-sweep-radial" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor={TEAL_LIGHT} stopOpacity="0" />
+            <stop offset="55%" stopColor={TEAL_LIGHT} stopOpacity="0.12" />
+            <stop offset="100%" stopColor={TEAL_LIGHT} stopOpacity="0.42" />
+          </radialGradient>
+          <radialGradient id="twin-disc" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor={TEAL} stopOpacity="0.22" />
+            <stop offset="70%" stopColor={TEAL} stopOpacity="0.07" />
+            <stop offset="100%" stopColor={TEAL} stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="twin-helix" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor={TEAL_LIGHT} stopOpacity="0.95" />
+            <stop offset="50%" stopColor={TEAL} stopOpacity="1" />
+            <stop offset="100%" stopColor={TEAL_LIGHT} stopOpacity="0.95" />
           </linearGradient>
           <filter id="twin-glow" x="-60%" y="-60%" width="220%" height="220%">
             <feGaussianBlur stdDeviation="3.2" result="blur" />
@@ -114,163 +244,259 @@ export const HologramAstronaut: React.FC<HologramAstronautProps> = ({
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <linearGradient id="twin-beam" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={TEAL_LIGHT} stopOpacity="0" />
-            <stop offset="50%" stopColor={TEAL_LIGHT} stopOpacity="0.9" />
-            <stop offset="100%" stopColor={TEAL_LIGHT} stopOpacity="0" />
-          </linearGradient>
           <clipPath id="twin-frame">
             <rect x="0" y="0" width="400" height="560" rx="18" />
           </clipPath>
         </defs>
 
-        {/* Holographic chamber backdrop */}
         <g clipPath="url(#twin-frame)">
+          {/* Dark navy scan chamber */}
+          <rect x="0" y="0" width="400" height="560" fill={NAVY} />
           <rect x="0" y="0" width="400" height="560" fill="url(#twin-bg)" />
 
-          {/* Volumetric grid floor */}
-          <g opacity="0.35">
-            {[0, 1, 2, 3, 4, 5].map((i) => (
-              <line
-                key={`h-${i}`}
-                x1="0"
-                y1={452 + i * 18}
-                x2="400"
-                y2={452 + i * 18}
+          {/* Instrument face */}
+          <circle cx={CENTER_X} cy={CENTER_Y} r={RADAR_R} fill="url(#twin-disc)" />
+
+          {/* Subtle orbital grid lines */}
+          <g opacity="0.75">
+            {[38, 74, 112].map((ry) => (
+              <ellipse
+                key={`orbit-${ry}`}
+                cx={CENTER_X}
+                cy={CENTER_Y}
+                rx={RADAR_R}
+                ry={ry}
+                fill="none"
                 stroke={TEAL}
-                strokeWidth="0.6"
-                opacity={0.5 - i * 0.06}
+                strokeWidth="0.7"
+                opacity={0.3}
               />
             ))}
-            {[40, 100, 160, 220, 280, 340].map((x) => (
+            {[0, 45, 90, 135].map((deg) => {
+              const rad = toRad(deg);
+              return (
+                <line
+                  key={`grid-${deg}`}
+                  x1={CENTER_X - RADAR_R * Math.sin(rad)}
+                  y1={CENTER_Y + RADAR_R * Math.cos(rad)}
+                  x2={CENTER_X + RADAR_R * Math.sin(rad)}
+                  y2={CENTER_Y - RADAR_R * Math.cos(rad)}
+                  stroke={TEAL}
+                  strokeWidth="0.6"
+                  opacity="0.16"
+                />
+              );
+            })}
+            {[CENTER_Y - 150, CENTER_Y - 75, CENTER_Y + 75, CENTER_Y + 150].map((y) => (
               <line
-                key={`v-${x}`}
-                x1={x}
-                y1="452"
-                x2={200 + (x - 200) * 0.42}
-                y2="560"
+                key={`hline-${y}`}
+                x1={CENTER_X - RADAR_R}
+                y1={y}
+                x2={CENTER_X + RADAR_R}
+                y2={y}
                 stroke={TEAL}
                 strokeWidth="0.6"
+                opacity="0.14"
+              />
+            ))}
+          </g>
+
+          {/* Molecular sample points */}
+          {MOLECULE_SAMPLES.map((sample, index) => (
+            <circle
+              key={`mol-${index}`}
+              cx={sample.x}
+              cy={sample.y}
+              r={sample.r}
+              fill={TEAL_LIGHT}
+              opacity={sample.opacity}
+            />
+          ))}
+
+          {/* Concentric radar rings */}
+          {RING_RADII.map((radius, index) => (
+            <circle
+              key={`ring-${radius}`}
+              cx={CENTER_X}
+              cy={CENTER_Y}
+              r={radius}
+              fill="none"
+              stroke={TEAL}
+              strokeWidth={index === RING_RADII.length - 1 ? 1.6 : 1.1}
+              opacity={index === RING_RADII.length - 1 ? 0.95 : 0.6}
+              filter="url(#twin-soft-glow)"
+            />
+          ))}
+          <circle
+            cx={CENTER_X}
+            cy={CENTER_Y}
+            r={RADAR_R - 16}
+            fill="none"
+            stroke={TEAL_LIGHT}
+            strokeWidth="0.7"
+            opacity="0.45"
+            strokeDasharray="2 7"
+          />
+
+          {/* Precision degree ticks */}
+          <g>
+            {TICKS.map((tick, index) => (
+              <line
+                key={`tick-${index}`}
+                x1={tick.x1}
+                y1={tick.y1}
+                x2={tick.x2}
+                y2={tick.y2}
+                stroke={tick.major ? TEAL_LIGHT : TEAL}
+                strokeWidth={tick.major ? 1.3 : 0.7}
+                opacity={tick.major ? 0.8 : 0.42}
+              />
+            ))}
+          </g>
+
+          {/* Degree numerals */}
+          <g fill={TEAL_LIGHT} opacity="0.55" fontSize="7" fontFamily="monospace" textAnchor="middle" dominantBaseline="middle">
+            {DEGREE_LABELS.map((item) => (
+              <text key={item.label} x={item.x} y={item.y}>
+                {item.label}
+              </text>
+            ))}
+          </g>
+
+          {/* Radar sweep wedge */}
+          <g className="animate-spin-slow twin-spin-center">
+            <path
+              d={`M ${CENTER_X} ${CENTER_Y} L ${CENTER_X + RADAR_R} ${CENTER_Y} A ${RADAR_R} ${RADAR_R} 0 0 0 ${CENTER_X + RADAR_R * Math.cos(toRad(-28))} ${
+                CENTER_Y + RADAR_R * Math.sin(toRad(-28))
+              } Z`}
+              fill="url(#twin-sweep-radial)"
+              opacity="0.85"
+            />
+            <line
+              x1={CENTER_X}
+              y1={CENTER_Y}
+              x2={CENTER_X + RADAR_R}
+              y2={CENTER_Y}
+              stroke={TEAL_LIGHT}
+              strokeWidth="1.2"
+              opacity="0.75"
+              filter="url(#twin-soft-glow)"
+            />
+          </g>
+
+          {/* Radar core */}
+          <circle cx={CENTER_X} cy={CENTER_Y} r="26" fill="none" stroke={TEAL} strokeWidth="0.8" opacity="0.4" />
+          <circle cx={CENTER_X} cy={CENTER_Y} r="9" fill={NAVY_DEEP} stroke={TEAL} strokeWidth="1.2" opacity="0.9" />
+          <circle cx={CENTER_X} cy={CENTER_Y} r="3" fill={TEAL_LIGHT} filter="url(#twin-soft-glow)" />
+
+          {/* Vertical 3D-style DNA double helix */}
+          <g>
+            {/* Back-facing backbone runs */}
+            {STRAND_A.back.map((points, index) => (
+              <polyline
+                key={`a-back-${index}`}
+                points={points}
+                fill="none"
+                stroke={TEAL}
+                strokeWidth="1.3"
+                strokeLinecap="round"
                 opacity="0.35"
               />
+            ))}
+            {STRAND_B.back.map((points, index) => (
+              <polyline
+                key={`b-back-${index}`}
+                points={points}
+                fill="none"
+                stroke={TEAL}
+                strokeWidth="1.3"
+                strokeLinecap="round"
+                opacity="0.35"
+              />
+            ))}
+
+            {/* Base-pair rungs */}
+            {RUNGS.map((rung, index) => (
+              <g key={`rung-${index}`}>
+                <line
+                  x1={rung.x1}
+                  y1={rung.y}
+                  x2={rung.x2}
+                  y2={rung.y}
+                  stroke={TEAL_LIGHT}
+                  strokeWidth="1.1"
+                  opacity={rung.opacity}
+                  strokeLinecap="round"
+                />
+                <circle cx={rung.x1} cy={rung.y} r="1.7" fill={TEAL_LIGHT} opacity={rung.opacity} />
+                <circle cx={rung.x2} cy={rung.y} r="1.7" fill={TEAL_LIGHT} opacity={rung.opacity} />
+              </g>
+            ))}
+
+            {/* Front-facing backbone runs */}
+            {STRAND_A.front.map((points, index) => (
+              <g key={`a-front-${index}`}>
+                <polyline
+                  points={points}
+                  fill="none"
+                  stroke={TEAL_LIGHT}
+                  strokeWidth="7"
+                  strokeLinecap="round"
+                  opacity="0.16"
+                  filter="url(#twin-glow)"
+                />
+                <polyline
+                  points={points}
+                  fill="none"
+                  stroke="url(#twin-helix)"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  filter="url(#twin-soft-glow)"
+                />
+              </g>
+            ))}
+            {STRAND_B.front.map((points, index) => (
+              <g key={`b-front-${index}`}>
+                <polyline
+                  points={points}
+                  fill="none"
+                  stroke={TEAL_LIGHT}
+                  strokeWidth="7"
+                  strokeLinecap="round"
+                  opacity="0.16"
+                  filter="url(#twin-glow)"
+                />
+                <polyline
+                  points={points}
+                  fill="none"
+                  stroke="url(#twin-helix)"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  filter="url(#twin-soft-glow)"
+                />
+              </g>
             ))}
           </g>
 
           {/* Scanning beam */}
           <rect x="0" y="40" width="400" height="2" fill="url(#twin-beam)" className="twin-scan" />
 
-          {/* Rotating containment rings */}
-          <g className="animate-spin-slow" style={{ transformOrigin: '200px 520px' }}>
-            <ellipse cx="200" cy="520" rx="118" ry="26" fill="none" stroke={TEAL} strokeWidth="1" opacity="0.45" />
-            <ellipse cx="200" cy="520" rx="88" ry="17" fill="none" stroke={TEAL_LIGHT} strokeWidth="0.8" opacity="0.35" strokeDasharray="4 6" />
-          </g>
-          <ellipse cx="200" cy="520" rx="132" ry="30" fill="none" stroke={TEAL} strokeWidth="0.7" opacity="0.28" />
-          <ellipse cx="200" cy="520" rx="66" ry="13" fill={TEAL} opacity="0.18" />
-
-          {/* Backpack (behind torso) */}
-          <rect x="250" y="158" width="30" height="120" rx="12" fill="url(#twin-body)" stroke={TEAL} strokeWidth="1.4" opacity="0.8" />
-          <line x1="258" y1="176" x2="272" y2="176" stroke={TEAL} strokeWidth="1" opacity="0.6" />
-          <line x1="258" y1="192" x2="272" y2="192" stroke={TEAL} strokeWidth="1" opacity="0.6" />
-          <line x1="258" y1="208" x2="272" y2="208" stroke={TEAL} strokeWidth="1" opacity="0.6" />
-
-          {/* Helmet shell */}
-          <ellipse cx="200" cy="80" rx="54" ry="58" fill="url(#twin-body)" stroke={TEAL} strokeWidth="1.8" opacity="0.9" />
-          <ellipse cx="200" cy="80" rx="45" ry="49" fill="none" stroke={TEAL_LIGHT} strokeWidth="0.7" opacity="0.45" strokeDasharray="3 5" />
-          {/* Visor */}
-          <path
-            d="M156,66 Q200,44 244,66 Q238,108 200,114 Q162,108 156,66 Z"
-            fill={NAVY}
-            fillOpacity="0.75"
-            stroke={TEAL_LIGHT}
-            strokeWidth="1.2"
-            opacity="0.92"
-          />
-          <path d="M168,74 Q196,58 224,68" fill="none" stroke={TEAL_LIGHT} strokeWidth="1" opacity="0.65" />
-          {/* Helmet crest + comms */}
-          <path d="M200,22 L200,34" stroke={TEAL} strokeWidth="1.4" opacity="0.7" />
-          <circle cx="200" cy="20" r="3" fill={TEAL} opacity="0.9" filter="url(#twin-soft-glow)" />
-          <path d="M146,60 Q146,38 168,28" fill="none" stroke={TEAL} strokeWidth="1" opacity="0.5" />
-          <path d="M254,60 Q254,38 232,28" fill="none" stroke={TEAL} strokeWidth="1" opacity="0.5" />
-
-          {/* Neck ring */}
-          <rect x="180" y="130" width="40" height="14" rx="7" fill={NAVY_DEEP} stroke={TEAL} strokeWidth="1.4" opacity="0.9" />
-          <line x1="188" y1="137" x2="212" y2="137" stroke={TEAL_LIGHT} strokeWidth="1" opacity="0.6" />
-
-          {/* Torso shell */}
-          <path
-            d="M146,156 Q146,143 159,141 L241,141 Q254,143 254,156 L250,200 Q248,232 246,258 L244,286 Q243,300 230,302 L170,302 Q157,300 156,286 L154,258 Q152,232 150,200 Z"
-            fill="url(#twin-body)"
-            stroke={TEAL}
-            strokeWidth="1.8"
-            opacity="0.9"
-          />
-          {/* Spine line */}
-          <line x1="200" y1="146" x2="200" y2="300" stroke={TEAL_LIGHT} strokeWidth="0.9" opacity="0.5" strokeDasharray="4 6" />
-          {/* Rib arcs */}
-          <path d="M166,186 Q200,176 234,186" fill="none" stroke={TEAL} strokeWidth="1" opacity="0.45" />
-          <path d="M164,206 Q200,196 236,206" fill="none" stroke={TEAL} strokeWidth="1" opacity="0.42" />
-          <path d="M164,226 Q200,216 236,226" fill="none" stroke={TEAL} strokeWidth="1" opacity="0.38" />
-          {/* Chest control panel */}
-          <rect x="170" y="160" width="60" height="46" rx="8" fill={NAVY_DEEP} stroke={TEAL} strokeWidth="1.3" opacity="0.9" />
-          <circle cx="186" cy="176" r="4" fill={TEAL} opacity="0.9" />
-          <circle cx="200" cy="176" r="4" fill={TEAL_LIGHT} opacity="0.75" />
-          <circle cx="214" cy="176" r="4" fill={TEAL} opacity="0.55" />
-          <line x1="180" y1="190" x2="220" y2="190" stroke={TEAL_LIGHT} strokeWidth="1" opacity="0.6" />
-          <line x1="180" y1="198" x2="206" y2="198" stroke={TEAL_LIGHT} strokeWidth="1" opacity="0.4" />
-          {/* Waist unit */}
-          <rect x="172" y="258" width="56" height="28" rx="7" fill="none" stroke={TEAL} strokeWidth="1.1" opacity="0.6" />
-          <line x1="182" y1="272" x2="218" y2="272" stroke={TEAL_LIGHT} strokeWidth="1" opacity="0.5" />
-
-          {/* Shoulder joints */}
-          <Joint cx={146} cy={166} r={6} />
-          <Joint cx={254} cy={166} r={6} />
-
-          {/* Arms */}
-          <Wire points="146,166 104,240" opacity={0.85} width={1.8} />
-          <Wire points="104,240 92,320" opacity={0.75} width={1.6} />
-          <Joint cx={104} cy={240} r={4.5} />
-          <Joint cx={92} cy={320} r={4} />
-          <path d="M86,320 Q92,334 100,320" fill="none" stroke={TEAL} strokeWidth="1.6" opacity="0.8" />
-
-          <Wire points="254,166 296,240" opacity={0.85} width={1.8} />
-          <Wire points="296,240 308,320" opacity={0.75} width={1.6} />
-          <Joint cx={296} cy={240} r={4.5} />
-          <Joint cx={308} cy={320} r={4} />
-          <path d="M300,320 Q308,334 316,320" fill="none" stroke={TEAL} strokeWidth="1.6" opacity="0.8" />
-
-          {/* Pelvis */}
-          <path
-            d="M158,300 L242,300 L238,344 Q236,354 226,354 L174,354 Q164,354 162,344 Z"
-            fill="url(#twin-body)"
-            stroke={TEAL}
-            strokeWidth="1.7"
-            opacity="0.88"
-          />
-          <line x1="176" y1="326" x2="224" y2="326" stroke={TEAL_LIGHT} strokeWidth="1" opacity="0.45" />
-
-          {/* Legs */}
-          <Wire points="186,350 176,432" opacity={0.85} width={1.9} />
-          <Wire points="176,432 172,494" opacity={0.72} width={1.6} />
-          <Joint cx={176} cy={432} r={5} />
-          <Joint cx={172} cy={494} r={4} />
-          <path d="M158,494 Q172,506 186,494" fill="none" stroke={TEAL} strokeWidth="1.6" opacity="0.8" />
-
-          <Wire points="214,350 224,432" opacity={0.85} width={1.9} />
-          <Wire points="224,432 228,494" opacity={0.72} width={1.6} />
-          <Joint cx={224} cy={432} r={5} />
-          <Joint cx={228} cy={494} r={4} />
-          <path d="M214,494 Q228,506 242,494" fill="none" stroke={TEAL} strokeWidth="1.6" opacity="0.8" />
-
-          {/* Connector traces to hotspots */}
+          {/* Connector traces from each node toward the core */}
           {HOTSPOT_NODES.map((node) => {
             const isActive = activeHotspot === node.id;
             return (
-              <g key={`link-${node.id}`} opacity={isActive ? 0.95 : 0.32}>
+              <g key={`link-${node.id}`} opacity={isActive ? 0.9 : 0.25}>
                 <line
                   x1={node.x}
                   y1={node.y}
                   x2={node.x}
-                  y2={node.id === 'exposure' ? 138 : node.id === 'dna' ? 248 : 400}
+                  y2={
+                    node.id === 'exposure'
+                      ? CENTER_Y - 62
+                      : node.id === 'dna'
+                        ? CENTER_Y
+                        : CENTER_Y + 62
+                  }
                   stroke={TEAL_LIGHT}
                   strokeWidth="0.8"
                   strokeDasharray="2 4"
