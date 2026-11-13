@@ -290,6 +290,9 @@ export default function App() {
               : "Space Biology Studies & Simulated Mission Telemetry"}
           </span>
         </div>
+        <p className="max-w-5xl mx-auto mt-2 text-[11px] leading-relaxed text-brand-600/80">
+          {t.disclaimer}
+        </p>
       </footer>
 
       {/* Modals */}
