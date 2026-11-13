@@ -131,3 +131,31 @@ def test_whatif_needs_two_plans(client: TestClient) -> None:
         },
     )
     assert r.status_code == 422
+
+
+def test_telemetry_crew(client: TestClient) -> None:
+    r = client.get("/api/v1/telemetry/crew")
+    assert r.status_code == 200
+    payload = c.TelemetryCrewPayload.model_validate(r.json())
+    assert payload.count == 4
+    assert [m.id for m in payload.crew] == ["crew-01", "crew-02", "crew-03", "crew-04"]
+    for m in payload.crew:
+        assert 0 <= m.bone_loss_risk_percentage <= 100
+        assert m.current_bmd_t_score <= m.baseline_bmd_t_score  # loss direction
+        assert m.cohort_type == "simulated_mission_telemetry"
+        assert m.gene_data_source is None
+    # deterministic composition: no timestamps, identical response on repeat call
+    again = c.TelemetryCrewPayload.model_validate(client.get("/api/v1/telemetry/crew").json())
+    assert again == payload
+
+
+def test_osdr_studies(client: TestClient) -> None:
+    r = client.get("/api/v1/osdr/studies")
+    assert r.status_code == 200
+    payload = c.OsdrStudiesPayload.model_validate(r.json())
+    assert payload.sync_status == "ready"
+    assert payload.count == payload.expected_count == 6
+    accessions = {s.accession for s in payload.studies}
+    assert {"OSD-102", "OSD-48", "OSD-714"} <= accessions
+    osd714 = next(s for s in payload.studies if s.accession == "OSD-714")
+    assert "RUNX2" in osd714.genes

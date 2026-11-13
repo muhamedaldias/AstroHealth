@@ -236,3 +236,118 @@ class EngineInput(BaseModel):
     scenario: Scenario
     measurements: list[Measurement]
     countermeasures: list[Countermeasure]
+
+
+class Status(StrEnum):
+    upregulated = 'upregulated'
+    downregulated = 'downregulated'
+
+
+class SyncStatus(StrEnum):
+    ready = 'ready'
+    syncing = 'syncing'
+
+
+class AffectedGene(BaseModel):
+    symbol: str
+    source_symbol: str | None = None
+    source_log2fc: float | None = None
+    ortholog_symbol: str | None = None
+    mouse_symbol: str | None = None
+    ensembl: str | None = None
+    fold_change: float | None = None
+    log2fc: float
+    change_percent: float
+    p_value: Annotated[float | None, Field(...)]
+    adj_p_value: float | None = None
+    stat: float | None = None
+    gene_name: str | None = None
+    status: Status
+    osdr_ref: str | None = None
+    contrast_column: str | None = None
+    tissue: str | None = None
+    contrast: str | None = None
+    measured: bool | None = None
+    significant: bool | None = None
+
+
+class TelemetryCrewMember(BaseModel):
+    id: Annotated[
+        str,
+        Field(
+            description='Contract crew id (links telemetry to crew, measurements and forecast)'
+        ),
+    ]
+    name: str
+    name_ar: str
+    role: str
+    role_ar: str
+    mission: str
+    mission_ar: str
+    space_days: Annotated[int, Field(description='Simulated mission day count', ge=0)]
+    radiation_msv: Annotated[
+        float, Field(description='Simulated cumulative dose in mSv')
+    ]
+    eva_hours: Annotated[float, Field(description='Simulated EVA hours')]
+    age: int
+    blood_type: str
+    baseline_bmd_t_score: Annotated[
+        float,
+        Field(description='Illustrative T-score mapping of the contract baseline BMD'),
+    ]
+    current_bmd_t_score: Annotated[
+        float,
+        Field(description='Baseline T-score shifted by the engine forecast end value'),
+    ]
+    bone_loss_risk_percentage: Annotated[
+        float,
+        Field(
+            description='100 x engine-forecast probability of crossing the -10% loss threshold'
+        ),
+    ]
+    dna_damage_index: Annotated[float, Field(description='Simulated 0-100 index')]
+    cellular_repair_efficiency: Annotated[
+        float, Field(description='Simulated 0-100 index')
+    ]
+    affected_genes: list[AffectedGene]
+    cohort_type: Literal['simulated_mission_telemetry']
+    gene_data_source: Annotated[str | None, Field(...)]
+
+
+class TelemetryCrewPayload(BaseModel):
+    count: int
+    crew: list[TelemetryCrewMember]
+
+
+class OsdrStudy(BaseModel):
+    accession: str
+    glds: str | list[str]
+    title: str
+    description: str
+    organism: str
+    material_type: str | list[str]
+    project_type: str
+    mission: str
+    assay: str | list[str]
+    platform: str | list[str]
+    release_date: Annotated[int | None, Field(...)]
+    tissue_label: str
+    de_file: str
+    contrast: str
+    genes: dict[str, AffectedGene]
+    source_url: str
+    osdr_url: str
+    fetched_at: str
+    stale: Annotated[
+        bool,
+        Field(description='Filled server-side as false when absent in cached bundles'),
+    ]
+
+
+class OsdrStudiesPayload(BaseModel):
+    source: str
+    repository: str
+    count: int
+    expected_count: int
+    sync_status: SyncStatus
+    studies: list[OsdrStudy]

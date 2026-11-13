@@ -14,6 +14,7 @@ from .db import make_session_factory
 from .repository import MeasurementRepository
 from .routes.api import router
 from .service import ForecastService
+from .telemetry import TelemetryService
 
 
 def create_app(settings: Settings | None = None, database_url: str | None = None) -> FastAPI:
@@ -33,8 +34,10 @@ def create_app(settings: Settings | None = None, database_url: str | None = None
     repo.seed_if_empty(catalog.seed_measurements)
     engine = get_engine(settings.engine)
 
+    service = ForecastService(catalog, repo, engine)
     app.state.catalog, app.state.repo, app.state.engine = catalog, repo, engine
-    app.state.service = ForecastService(catalog, repo, engine)
+    app.state.service = service
+    app.state.telemetry = TelemetryService(catalog, service)
     app.include_router(router)
 
     dist = Path(root / "apps" / "web" / "dist")

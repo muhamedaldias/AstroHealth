@@ -21,6 +21,8 @@ tags:
   - name: catalog
   - name: crew
   - name: forecast
+  - name: telemetry
+  - name: osdr
 
 paths:
   /api/v1/health:
@@ -169,6 +171,35 @@ paths:
               schema: { $ref: "#/components/schemas/WhatIfResponse" }
         "404": { $ref: "#/components/responses/NotFound" }
         "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  /api/v1/telemetry/crew:
+    get:
+      tags: [telemetry]
+      operationId: listTelemetryCrew
+      summary: Crew roster enriched with simulated telemetry; bone-loss risk from the real engine forecast
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TelemetryCrewPayload" }
+
+  /api/v1/osdr/studies:
+    get:
+      tags: [osdr]
+      operationId: listOsdrStudies
+      summary: NASA OSDR study bundles with per-study gene-expression records (from data/processed/osdr)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OsdrStudiesPayload" }
+        "503":
+          description: OSDR data directory missing or empty
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
 
 components:
   parameters:
@@ -528,3 +559,109 @@ components:
         countermeasures:
           type: array
           items: { $ref: "#/components/schemas/Countermeasure" }
+
+    # ----------------------------------- UI integration (contract 0.1.2)
+    Status:
+      type: string
+      enum: [upregulated, downregulated]
+
+    SyncStatus:
+      type: string
+      enum: [ready, syncing]
+
+    AffectedGene:
+      type: object
+      required: [symbol, log2fc, change_percent, p_value, status]
+      properties:
+        symbol: { type: string }
+        source_symbol: { type: string, nullable: true }
+        source_log2fc: { type: number, nullable: true }
+        ortholog_symbol: { type: string, nullable: true }
+        mouse_symbol: { type: string, nullable: true }
+        ensembl: { type: string, nullable: true }
+        fold_change: { type: number, nullable: true }
+        log2fc: { type: number }
+        change_percent: { type: number }
+        p_value: { type: number, nullable: true }
+        adj_p_value: { type: number, nullable: true }
+        stat: { type: number, nullable: true }
+        gene_name: { type: string, nullable: true }
+        status: { $ref: "#/components/schemas/Status" }
+        osdr_ref: { type: string, nullable: true }
+        contrast_column: { type: string, nullable: true }
+        tissue: { type: string, nullable: true }
+        contrast: { type: string, nullable: true }
+        measured: { type: boolean, nullable: true }
+        significant: { type: boolean, nullable: true }
+
+    TelemetryCrewMember:
+      type: object
+      required: [id, name, name_ar, role, role_ar, mission, mission_ar, space_days,
+        radiation_msv, eva_hours, age, blood_type, baseline_bmd_t_score,
+        current_bmd_t_score, bone_loss_risk_percentage, dna_damage_index,
+        cellular_repair_efficiency, affected_genes, cohort_type, gene_data_source]
+      properties:
+        id: { type: string, description: "Contract crew id (links telemetry to crew, measurements and forecast)" }
+        name: { type: string }
+        name_ar: { type: string }
+        role: { type: string }
+        role_ar: { type: string }
+        mission: { type: string }
+        mission_ar: { type: string }
+        space_days: { type: integer, minimum: 0, description: Simulated mission day count }
+        radiation_msv: { type: number, description: Simulated cumulative dose in mSv }
+        eva_hours: { type: number, description: Simulated EVA hours }
+        age: { type: integer }
+        blood_type: { type: string }
+        baseline_bmd_t_score: { type: number, description: Illustrative T-score mapping of the contract baseline BMD }
+        current_bmd_t_score: { type: number, description: Baseline T-score shifted by the engine forecast end value }
+        bone_loss_risk_percentage: { type: number, description: 100 x engine-forecast probability of crossing the -10% loss threshold }
+        dna_damage_index: { type: number, description: Simulated 0-100 index }
+        cellular_repair_efficiency: { type: number, description: Simulated 0-100 index }
+        affected_genes: { type: array, items: { $ref: "#/components/schemas/AffectedGene" } }
+        cohort_type: { type: string, enum: [simulated_mission_telemetry] }
+        gene_data_source: { type: string, nullable: true }
+
+    TelemetryCrewPayload:
+      type: object
+      required: [count, crew]
+      properties:
+        count: { type: integer }
+        crew: { type: array, items: { $ref: "#/components/schemas/TelemetryCrewMember" } }
+
+    OsdrStudy:
+      type: object
+      required: [accession, glds, title, description, organism, material_type, project_type,
+        mission, assay, platform, release_date, tissue_label, de_file, contrast, genes,
+        source_url, osdr_url, fetched_at, stale]
+      properties:
+        accession: { type: string }
+        glds: { anyOf: [ { type: string }, { type: array, items: { type: string } } ] }
+        title: { type: string }
+        description: { type: string }
+        organism: { type: string }
+        material_type: { anyOf: [ { type: string }, { type: array, items: { type: string } } ] }
+        project_type: { type: string }
+        mission: { type: string }
+        assay: { anyOf: [ { type: string }, { type: array, items: { type: string } } ] }
+        platform: { anyOf: [ { type: string }, { type: array, items: { type: string } } ] }
+        release_date: { type: integer, nullable: true }
+        tissue_label: { type: string }
+        de_file: { type: string }
+        contrast: { type: string }
+        genes: { type: object, additionalProperties: { $ref: "#/components/schemas/AffectedGene" } }
+        source_url: { type: string }
+        osdr_url: { type: string }
+        fetched_at: { type: string }
+        stale: { type: boolean, description: Filled server-side as false when absent in cached bundles }
+
+    OsdrStudiesPayload:
+      type: object
+      required: [source, repository, count, expected_count, sync_status, studies]
+      properties:
+        source: { type: string }
+        repository: { type: string }
+        count: { type: integer }
+        expected_count: { type: integer }
+        sync_status: { $ref: "#/components/schemas/SyncStatus" }
+        studies: { type: array, items: { $ref: "#/components/schemas/OsdrStudy" } }

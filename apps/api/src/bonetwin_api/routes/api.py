@@ -14,7 +14,9 @@ from bonetwin_contracts import (
     MeasurementCreate,
     MeasurementList,
     ModelInfo,
+    OsdrStudiesPayload,
     ScenarioList,
+    TelemetryCrewPayload,
     WhatIfRequest,
     WhatIfResponse,
 )
@@ -22,6 +24,7 @@ from fastapi import APIRouter, Request
 
 from .. import __version__
 from ..errors import NotFound
+from ..osdr_studies import load_osdr_studies
 
 router = APIRouter(prefix="/api/v1")
 
@@ -118,3 +121,23 @@ def create_forecast(body: ForecastRequest, request: Request) -> Forecast:
 )
 def compare_what_if(body: WhatIfRequest, request: Request) -> WhatIfResponse:
     return request.app.state.service.whatif(body)
+
+
+@router.get(
+    "/telemetry/crew",
+    operation_id="listTelemetryCrew",
+    response_model=TelemetryCrewPayload,
+    tags=["telemetry"],
+)
+def list_telemetry_crew(request: Request) -> TelemetryCrewPayload:
+    return request.app.state.telemetry.payload()
+
+
+@router.get(
+    "/osdr/studies",
+    operation_id="listOsdrStudies",
+    response_model=OsdrStudiesPayload,
+    tags=["osdr"],
+)
+def list_osdr_studies() -> OsdrStudiesPayload:
+    return load_osdr_studies()

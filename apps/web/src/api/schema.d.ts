@@ -158,6 +158,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/telemetry/crew": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Crew roster enriched with simulated telemetry; bone-loss risk from the real engine forecast */
+        get: operations["listTelemetryCrew"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/osdr/studies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** NASA OSDR study bundles with per-study gene-expression records (from data/processed/osdr) */
+        get: operations["listOsdrStudies"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -335,6 +369,100 @@ export interface components {
             scenario: components["schemas"]["Scenario"];
             measurements: components["schemas"]["Measurement"][];
             countermeasures: components["schemas"]["Countermeasure"][];
+        };
+        /** @enum {string} */
+        Status: "upregulated" | "downregulated";
+        /** @enum {string} */
+        SyncStatus: "ready" | "syncing";
+        AffectedGene: {
+            symbol: string;
+            source_symbol?: string | null;
+            source_log2fc?: number | null;
+            ortholog_symbol?: string | null;
+            mouse_symbol?: string | null;
+            ensembl?: string | null;
+            fold_change?: number | null;
+            log2fc: number;
+            change_percent: number;
+            p_value: number | null;
+            adj_p_value?: number | null;
+            stat?: number | null;
+            gene_name?: string | null;
+            status: components["schemas"]["Status"];
+            osdr_ref?: string | null;
+            contrast_column?: string | null;
+            tissue?: string | null;
+            contrast?: string | null;
+            measured?: boolean | null;
+            significant?: boolean | null;
+        };
+        TelemetryCrewMember: {
+            /** @description Contract crew id (links telemetry to crew, measurements and forecast) */
+            id: string;
+            name: string;
+            name_ar: string;
+            role: string;
+            role_ar: string;
+            mission: string;
+            mission_ar: string;
+            /** @description Simulated mission day count */
+            space_days: number;
+            /** @description Simulated cumulative dose in mSv */
+            radiation_msv: number;
+            /** @description Simulated EVA hours */
+            eva_hours: number;
+            age: number;
+            blood_type: string;
+            /** @description Illustrative T-score mapping of the contract baseline BMD */
+            baseline_bmd_t_score: number;
+            /** @description Baseline T-score shifted by the engine forecast end value */
+            current_bmd_t_score: number;
+            /** @description 100 x engine-forecast probability of crossing the -10% loss threshold */
+            bone_loss_risk_percentage: number;
+            /** @description Simulated 0-100 index */
+            dna_damage_index: number;
+            /** @description Simulated 0-100 index */
+            cellular_repair_efficiency: number;
+            affected_genes: components["schemas"]["AffectedGene"][];
+            /** @enum {string} */
+            cohort_type: "simulated_mission_telemetry";
+            gene_data_source: string | null;
+        };
+        TelemetryCrewPayload: {
+            count: number;
+            crew: components["schemas"]["TelemetryCrewMember"][];
+        };
+        OsdrStudy: {
+            accession: string;
+            glds: string | string[];
+            title: string;
+            description: string;
+            organism: string;
+            material_type: string | string[];
+            project_type: string;
+            mission: string;
+            assay: string | string[];
+            platform: string | string[];
+            release_date: number | null;
+            tissue_label: string;
+            de_file: string;
+            contrast: string;
+            genes: {
+                [key: string]: components["schemas"]["AffectedGene"];
+            };
+            source_url: string;
+            osdr_url: string;
+            fetched_at: string;
+            /** @description Filled server-side as false when absent in cached bundles */
+            stale: boolean;
+        };
+        OsdrStudiesPayload: {
+            source: string;
+            repository: string;
+            count: number;
+            expected_count: number;
+            sync_status: components["schemas"]["SyncStatus"];
+            studies: components["schemas"]["OsdrStudy"][];
         };
     };
     responses: {
@@ -590,6 +718,55 @@ export interface operations {
             };
             404: components["responses"]["NotFound"];
             422: components["responses"]["ValidationFailed"];
+        };
+    };
+    listTelemetryCrew: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TelemetryCrewPayload"];
+                };
+            };
+        };
+    };
+    listOsdrStudies: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OsdrStudiesPayload"];
+                };
+            };
+            /** @description OSDR data directory missing or empty */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
         };
     };
 }
