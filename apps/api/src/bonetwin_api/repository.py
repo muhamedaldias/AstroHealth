@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 from bonetwin_contracts import Measurement, MeasurementCreate
 from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
-from twin_core import MARKER_UNITS
+from twin_core import MARKER_UNITS, EngineError
 
 from .db import MeasurementRow
 
@@ -55,13 +55,18 @@ class MeasurementRepository:
             return [_to_model(r) for r in s.scalars(q)]
 
     def add(self, crew_id: str, body: MeasurementCreate) -> Measurement:
+        unit = MARKER_UNITS.get(body.marker)
+        if unit is None:
+            # Unreachable while the contract and markers.py stay in sync; keeps a future
+            # 6th marker from surfacing as a KeyError 500 (it maps to engine_error 422).
+            raise EngineError(f"marker '{body.marker.value}' has no unit mapping")
         with self._sessions() as s, s.begin():
             row = MeasurementRow(
                 crew_id=crew_id,
                 mission_day=body.mission_day,
                 marker=body.marker.value,
                 value=body.value,
-                unit=MARKER_UNITS[body.marker],
+                unit=unit,
                 recorded_at=datetime.now(UTC),
             )
             s.add(row)

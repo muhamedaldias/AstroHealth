@@ -6,6 +6,8 @@ from sqlalchemy import DateTime, String, create_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 from sqlalchemy.pool import StaticPool
 
+from .config import resolve_database_url
+
 
 class Base(DeclarativeBase):
     pass
@@ -24,6 +26,7 @@ class MeasurementRow(Base):
 
 
 def make_session_factory(url: str) -> sessionmaker[Session]:
+    url = resolve_database_url(url)
     kwargs: dict = {}
     if url.endswith(":memory:") or url == "sqlite://":
         kwargs = {"connect_args": {"check_same_thread": False}, "poolclass": StaticPool}

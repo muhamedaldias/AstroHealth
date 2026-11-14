@@ -137,6 +137,7 @@ class TelemetryService:
                     age=crew.age_years,
                     blood_type=str(profile["blood_type"]),
                     baseline_bmd_t_score=baseline_t,
+                    # Illustrative, not a clinical conversion; assumes baseline BMD 1.0 g/cm2.
                     current_bmd_t_score=round(
                         baseline_t + femoral_protected.points[-1].mean_pct_change / 10.0,
                         2,

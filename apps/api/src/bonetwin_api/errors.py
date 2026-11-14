@@ -2,12 +2,16 @@
 
 from __future__ import annotations
 
+import logging
+
 from bonetwin_contracts import Error
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from twin_core import EngineError
+
+logger = logging.getLogger(__name__)
 
 
 class NotFound(Exception):
@@ -51,3 +55,10 @@ def install(app: FastAPI) -> None:
     async def _http(_: Request, exc: StarletteHTTPException) -> JSONResponse:
         code = "not_found" if exc.status_code == 404 else "http_error"
         return _json(exc.status_code, Error(code=code, message=str(exc.detail), details=None))
+
+    @app.exception_handler(Exception)
+    async def _unhandled(_: Request, exc: Exception) -> JSONResponse:
+        # Starlette routes `Exception` to ServerErrorMiddleware: log everything, leak
+        # nothing -- the client still gets the contract's Error shape, never a traceback.
+        logger.exception("unhandled exception")
+        return _json(500, Error(code="internal_error", message="Internal server error", details=None))
