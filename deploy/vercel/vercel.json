@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "web-dist",
+  "rewrites": [
+    { "source": "/api/v1/(.*)", "destination": "/api/index.py" }
+  ],
+  "env": {
+    "BONETWIN_ENGINE": "calibrated",
+    "BONETWIN_DATABASE_URL": "sqlite://"
+  }
+}
