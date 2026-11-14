@@ -2,6 +2,8 @@
 services:
   app:
     build: .
+    # WARNING: publishing 8000 exposes the UNAUTHENTICATED API (this API has no auth layer).
+    # On any public host, bind to loopback instead, e.g. ports: ["127.0.0.1:8000:8000"].
     ports: ["8000:8000"]
     environment:
       BONETWIN_ENGINE: ${BONETWIN_ENGINE:-stub}

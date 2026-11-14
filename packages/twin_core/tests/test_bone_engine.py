@@ -1,11 +1,9 @@
-"""Contract tests for the calibrated bone-loss engine.
+"""Domain tests for the calibrated bone-loss engine.
 
-Run in the same suite as test_engine_contract.py: every registered engine must
-validate a Forecast, return the right crew/scenario/horizon, emit sites whose
-confidence bands bracket the mean, and hold the risk probability inside [0, 1].
-
-Domain tests below pin the calibrated model's behaviour: a real protective
-plan loses less bone than none, and an elevated resorption marker (CTX) is
+The shared engine-contract checks (forecast shape, determinism, model-card
+keys) live in test_engine_contract.py and run against EVERY registered engine;
+this file pins the calibrated model's domain behaviour: a real protective plan
+loses less bone than none, and an elevated resorption marker (CTX) is
 personalised as catabolic (faster loss).
 """
 
@@ -14,8 +12,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import pytest
-from bonetwin_contracts import EngineInput, Forecast, MarkerId
+from bonetwin_contracts import EngineInput, MarkerId
 from twin_core import get_engine, list_engines
 from twin_core.protocol import Engine
 
@@ -25,44 +22,6 @@ FIXTURES = Path(__file__).resolve().parents[3] / "contracts" / "fixtures"
 def _base_input() -> EngineInput:
     data = json.loads((FIXTURES / "engine_input_example.json").read_text(encoding="utf-8"))
     return EngineInput.model_validate(data)
-
-
-# --------------------------------------------------------------------------- #
-# Shared engine-contract checks (apply to every registered engine)
-# --------------------------------------------------------------------------- #
-@pytest.mark.parametrize("engine_name", list_engines())
-def test_engine_honours_contract(engine_name: str) -> None:
-    engine = get_engine(engine_name)
-    inp = _base_input()
-    out = engine.forecast(inp)
-    Forecast.model_validate(out.model_dump())
-
-    assert out.crew_id == inp.crew.id
-    assert out.scenario_id == inp.scenario.id
-    assert out.horizon_days == inp.scenario.duration_days
-    assert out.countermeasure_ids == [c.id for c in inp.countermeasures]
-    assert out.disclaimer.strip()
-    assert out.sites, "at least one bone site"
-    for site in out.sites:
-        days = [p.day for p in site.points]
-        assert days == sorted(days) and days[0] == 0 and days[-1] == out.horizon_days
-        for p in site.points:
-            assert p.lower_95 <= p.mean_pct_change <= p.upper_95
-        assert 0.0 <= site.risk.prob_below_threshold_at_end <= 1.0
-
-
-@pytest.mark.parametrize("engine_name", list_engines())
-def test_engine_is_deterministic(engine_name: str) -> None:
-    engine, inp = get_engine(engine_name), _base_input()
-    a = engine.forecast(inp).model_dump(exclude={"generated_at"})
-    b = engine.forecast(inp).model_dump(exclude={"generated_at"})
-    assert a == b
-
-
-@pytest.mark.parametrize("engine_name", list_engines())
-def test_model_card_has_required_keys(engine_name: str) -> None:
-    card = get_engine(engine_name).model_card()
-    assert {"assumptions", "limitations", "data_sources", "disclaimer"} <= set(card)
 
 
 # --------------------------------------------------------------------------- #

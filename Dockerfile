@@ -7,7 +7,9 @@ WORKDIR /repo/apps/web
 RUN npm ci && npm run build
 
 FROM python:3.12-slim AS app
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+# Pinned to the immutable digest of ghcr.io/astral-sh/uv:latest (= uv 0.13.8,
+# the latest release at pin time 2026-11-14). Re-pin deliberately per release.
+COPY --from=ghcr.io/astral-sh/uv@sha256:5cc1805e2426484abca4ad46ea783bab281fdb225fd82d8ce6d66a81254bac85 /uv /usr/local/bin/uv
 WORKDIR /repo
 COPY pyproject.toml uv.lock .python-version ./
 COPY packages ./packages
