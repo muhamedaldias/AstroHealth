@@ -27,12 +27,15 @@ pick a crew member and a mission scenario, run a calibrated bone-loss
 forecast, and instantly see the mitigated vs. unmitigated difference across
 resistive exercise, nutrition, and cabin-environment countermeasures.
 
-The engine is grounded in real data from NASA's Open Science Data Repository
-(OSDR): six spaceflight bioscience studies (OSD-48, OSD-102, OSD-137,
-OSD-194, OSD-245, OSD-714) plus GeneLab biomarker context (CTX as a bone
-resorption marker). Every response is contract-tested against a versioned
-OpenAPI specification, so the forecasts the UI shows are the forecasts the
-engine computes — nothing is invented in the browser.
+The engine is a deterministic statistical model hand-calibrated to published
+space-medicine findings (NASA-STD-3001, ESA guidance, Axpe et al. 2020 npj
+Microgravity — every parameter cited in docs/SCIENCE_NOTES.md), and the
+platform's data backbone is real NASA data: six spaceflight bioscience
+studies from NASA's Open Science Data Repository (OSDR: OSD-48, OSD-102,
+OSD-137, OSD-194, OSD-245, OSD-714) with their gene markers, served live in
+the app. Every response is contract-tested against a versioned OpenAPI
+specification, so the forecasts the UI shows are the forecasts the engine
+computes — nothing is invented in the browser.
 
 Why it matters: as missions go to the Moon and Mars, crew health monitoring
 must shift from reaction to prediction. AstroHealth AI demonstrates that a

@@ -24,15 +24,20 @@ reviewed and approved by the team.
 
 ## Model & science provenance
 
-- The bone-loss engine (`packages/twin_core`, engine `calibrated_bone`) is a
-  calibrated statistical model whose parameters derive from published
-  space-biology findings (monthly bone-loss rates, countermeasure effects,
-  gravity factors) — documented in `docs/SCIENCE_NOTES.md` — and is
-  deterministic and fully tested (`test_bone_engine.py`,
-  `test_engine_contract.py`).
+- The prediction engine (`packages/twin_core`, engine `calibrated_bone`) is a
+  **deterministic, hand-calibrated statistical model — no machine-learning
+  training was performed**. It has no fitted parameters: its monthly bone-loss
+  rates, countermeasure multipliers, and gravity factors are set from
+  published space-medicine sources (NASA-STD-3001, ESA bone-loss guidance,
+  Axpe et al. 2020 npj Microgravity), each documented with its citation in
+  `docs/SCIENCE_NOTES.md`. The engine is deterministic and fully tested
+  (`test_bone_engine.py`, `test_engine_contract.py`).
 - NASA data usage is limited to public OSDR studies (OSD-48, -102, -137,
-  -194, -245, -714) via their open API, plus GeneLab terminology. No NASA
-  branding is used or modified.
+  -194, -245, -714) via their open API — real study metadata and gene markers
+  (RUNX2, SOST, TP53, RAD51, …) surfaced live in the app — plus GeneLab
+  terminology. **The OSDR bundles are not training data** (nothing was
+  trained); they anchor the platform's data layer. No NASA branding is used
+  or modified.
 
 ## Honesty commitments
 
