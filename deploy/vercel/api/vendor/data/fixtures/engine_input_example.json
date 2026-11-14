@@ -1,0 +1,227 @@
+{
+  "crew": {
+    "id": "crew-01",
+    "display_name": "Nova (fictional)",
+    "sex": "female",
+    "age_years": 38,
+    "baseline_bmd": [
+      {
+        "site": "lumbar_spine",
+        "bmd_g_cm2": 1.02
+      },
+      {
+        "site": "femoral_neck",
+        "bmd_g_cm2": 0.857
+      },
+      {
+        "site": "total_hip",
+        "bmd_g_cm2": 1.0
+      },
+      {
+        "site": "distal_tibia",
+        "bmd_g_cm2": 0.969
+      }
+    ]
+  },
+  "scenario": {
+    "id": "iss-180",
+    "name": "ISS expedition (6 months)",
+    "duration_days": 180,
+    "description": "Low Earth orbit. Frequent resupply and ground contact."
+  },
+  "measurements": [
+    {
+      "id": 1,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "ctx",
+      "value": 0.41,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "p1np",
+      "value": 41.496,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "urine_calcium",
+      "value": 4.304,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": 4,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "vitamin_d_25oh",
+      "value": 59.873,
+      "unit": "nmol/L",
+      "recorded_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": 5,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "pth",
+      "value": 35.528,
+      "unit": "pg/mL",
+      "recorded_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": 6,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "ctx",
+      "value": 0.419,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00Z"
+    },
+    {
+      "id": 7,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "p1np",
+      "value": 40.984,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00Z"
+    },
+    {
+      "id": 8,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "urine_calcium",
+      "value": 4.468,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-03-02T00:00:00Z"
+    },
+    {
+      "id": 9,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "vitamin_d_25oh",
+      "value": 62.842,
+      "unit": "nmol/L",
+      "recorded_at": "2026-03-02T00:00:00Z"
+    },
+    {
+      "id": 10,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "pth",
+      "value": 34.123,
+      "unit": "pg/mL",
+      "recorded_at": "2026-03-02T00:00:00Z"
+    },
+    {
+      "id": 11,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "ctx",
+      "value": 0.442,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00Z"
+    },
+    {
+      "id": 12,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "p1np",
+      "value": 42.152,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00Z"
+    },
+    {
+      "id": 13,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "urine_calcium",
+      "value": 4.857,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-04-01T00:00:00Z"
+    },
+    {
+      "id": 14,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "vitamin_d_25oh",
+      "value": 60.68,
+      "unit": "nmol/L",
+      "recorded_at": "2026-04-01T00:00:00Z"
+    },
+    {
+      "id": 15,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "pth",
+      "value": 34.36,
+      "unit": "pg/mL",
+      "recorded_at": "2026-04-01T00:00:00Z"
+    },
+    {
+      "id": 16,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "ctx",
+      "value": 0.489,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00Z"
+    },
+    {
+      "id": 17,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "p1np",
+      "value": 39.591,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00Z"
+    },
+    {
+      "id": 18,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "urine_calcium",
+      "value": 5.023,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-05-01T00:00:00Z"
+    },
+    {
+      "id": 19,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "vitamin_d_25oh",
+      "value": 58.376,
+      "unit": "nmol/L",
+      "recorded_at": "2026-05-01T00:00:00Z"
+    },
+    {
+      "id": 20,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "pth",
+      "value": 33.14,
+      "unit": "pg/mL",
+      "recorded_at": "2026-05-01T00:00:00Z"
+    }
+  ],
+  "countermeasures": [
+    {
+      "id": "resistive_exercise",
+      "name": "Resistive exercise (ARED-class)",
+      "category": "exercise",
+      "evidence_level": "established",
+      "summary": "Heavy resistive training on a vacuum-cylinder device. Reduces, but does not stop, loss.",
+      "contraindications": [
+        "Acute musculoskeletal injury"
+      ],
+      "requires_physician_approval": false
+    }
+  ]
+}

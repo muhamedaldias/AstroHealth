@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from pathlib import Path
 
 from bonetwin_contracts import OsdrStudiesPayload, OsdrStudy
@@ -24,7 +25,10 @@ _REPOSITORY = "NASA Open Science Data Repository (OSDR)"
 
 
 def load_osdr_studies() -> OsdrStudiesPayload:
-    files = sorted((find_repo_root() / _BUNDLES_DIR).glob("bundle_OSD-*.json"))
+    # Serverless bundles ship OSDR data outside the repo; BONETWIN_OSDR_DIR points at it.
+    env_dir = os.environ.get("BONETWIN_OSDR_DIR")
+    bundles_dir = Path(env_dir) if env_dir else find_repo_root() / _BUNDLES_DIR
+    files = sorted(bundles_dir.glob("bundle_OSD-*.json"))
     if not files:
         raise HTTPException(status_code=503, detail="OSDR data directory missing or empty")
     studies: list[OsdrStudy] = []

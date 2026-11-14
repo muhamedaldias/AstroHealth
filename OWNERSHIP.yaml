@@ -40,6 +40,7 @@ paths:
   - { path: .github/,                        owners: [ai, web, api], kind: infra }
   - { path: scripts/,                        owners: [ai, web, api], kind: infra }
   - { path: docs/,                           owners: [ai, web, api], kind: docs }
+  - { path: deploy/,                         owners: [ai, api],      kind: infra }
   - { path: Makefile,                        owners: [ai, web, api], kind: infra }
   - { path: pyproject.toml,                  owners: [ai, web, api], kind: infra }
   - { path: uv.lock,                         owners: [ai, web, api], kind: infra }

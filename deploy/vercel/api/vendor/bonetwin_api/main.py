@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from bonetwin_contracts import Error
@@ -49,7 +50,11 @@ class BodySizeLimitMiddleware:
 
 def create_app(settings: Settings | None = None, database_url: str | None = None) -> FastAPI:
     settings = settings or Settings()
-    root = find_repo_root()
+    try:
+        root = find_repo_root()
+    except RuntimeError:
+        # Serverless bundle: no repo root; data paths come from env overrides below.
+        root = None
     app = FastAPI(title="Astro Bone Twin API", version=__version__)
     errors.install(app)
     app.add_middleware(
@@ -60,7 +65,15 @@ def create_app(settings: Settings | None = None, database_url: str | None = None
     )
     app.add_middleware(BodySizeLimitMiddleware)
 
-    catalog = Catalog(root / "contracts" / "fixtures")
+    # Serverless bundles ship fixtures outside the repo; BONETWIN_FIXTURES_DIR points at them.
+    fixtures_env = os.environ.get("BONETWIN_FIXTURES_DIR")
+    if fixtures_env:
+        fixtures_dir = Path(fixtures_env)
+    elif root is not None:
+        fixtures_dir = root / "contracts" / "fixtures"
+    else:
+        raise RuntimeError("repo root not found and BONETWIN_FIXTURES_DIR not set")
+    catalog = Catalog(fixtures_dir)
     repo = MeasurementRepository(make_session_factory(database_url or settings.database_url))
     repo.seed_if_empty(catalog.seed_measurements)
     engine = get_engine(settings.engine)
@@ -71,7 +84,10 @@ def create_app(settings: Settings | None = None, database_url: str | None = None
     app.state.telemetry = TelemetryService(catalog, service)
     app.include_router(router)
 
-    dist = Path(root / "apps" / "web" / "dist")
-    if settings.serve_web and dist.exists():
-        app.mount("/", StaticFiles(directory=dist, html=True), name="web")
+    if settings.serve_web:
+        if root is None:
+            raise RuntimeError("repo root not found; serve_web requires a repo checkout")
+        dist = Path(root / "apps" / "web" / "dist")
+        if dist.exists():
+            app.mount("/", StaticFiles(directory=dist, html=True), name="web")
     return app

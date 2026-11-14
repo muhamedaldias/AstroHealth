@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "id": "iss-180",
+      "name": "ISS expedition (6 months)",
+      "duration_days": 180,
+      "description": "Low Earth orbit. Frequent resupply and ground contact."
+    },
+    {
+      "id": "lunar-90",
+      "name": "Lunar surface stay (3 months)",
+      "duration_days": 90,
+      "description": "Partial gravity. Limited exercise hardware."
+    },
+    {
+      "id": "mars-transit-210",
+      "name": "Mars transit (7 months)",
+      "duration_days": 210,
+      "description": "Deep space. Communication delay makes onboard autonomy essential."
+    }
+  ]
+}

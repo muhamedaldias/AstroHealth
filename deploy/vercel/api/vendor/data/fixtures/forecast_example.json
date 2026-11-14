@@ -1,0 +1,387 @@
+{
+  "crew_id": "crew-01",
+  "scenario_id": "iss-180",
+  "countermeasure_ids": [
+    "resistive_exercise"
+  ],
+  "horizon_days": 180,
+  "generated_at": "2026-01-01T00:00:00Z",
+  "engine": {
+    "name": "stub",
+    "version": "0.1.0",
+    "kind": "stub"
+  },
+  "sites": [
+    {
+      "site": "lumbar_spine",
+      "points": [
+        {
+          "day": 0,
+          "mean_pct_change": -0.0,
+          "lower_95": -0.0,
+          "upper_95": 0.0
+        },
+        {
+          "day": 15,
+          "mean_pct_change": -0.344,
+          "lower_95": -0.829,
+          "upper_95": 0.141
+        },
+        {
+          "day": 30,
+          "mean_pct_change": -0.688,
+          "lower_95": -1.374,
+          "upper_95": -0.002
+        },
+        {
+          "day": 45,
+          "mean_pct_change": -1.031,
+          "lower_95": -1.872,
+          "upper_95": -0.191
+        },
+        {
+          "day": 60,
+          "mean_pct_change": -1.375,
+          "lower_95": -2.345,
+          "upper_95": -0.405
+        },
+        {
+          "day": 75,
+          "mean_pct_change": -1.719,
+          "lower_95": -2.804,
+          "upper_95": -0.634
+        },
+        {
+          "day": 90,
+          "mean_pct_change": -2.063,
+          "lower_95": -3.251,
+          "upper_95": -0.875
+        },
+        {
+          "day": 105,
+          "mean_pct_change": -2.407,
+          "lower_95": -3.69,
+          "upper_95": -1.123
+        },
+        {
+          "day": 120,
+          "mean_pct_change": -2.75,
+          "lower_95": -4.122,
+          "upper_95": -1.378
+        },
+        {
+          "day": 135,
+          "mean_pct_change": -3.094,
+          "lower_95": -4.549,
+          "upper_95": -1.639
+        },
+        {
+          "day": 150,
+          "mean_pct_change": -3.438,
+          "lower_95": -4.972,
+          "upper_95": -1.904
+        },
+        {
+          "day": 165,
+          "mean_pct_change": -3.782,
+          "lower_95": -5.39,
+          "upper_95": -2.173
+        },
+        {
+          "day": 180,
+          "mean_pct_change": -4.125,
+          "lower_95": -5.806,
+          "upper_95": -2.445
+        }
+      ],
+      "risk": {
+        "threshold_pct_change": -10.0,
+        "prob_below_threshold_at_end": 0.0,
+        "level": "low"
+      }
+    },
+    {
+      "site": "femoral_neck",
+      "points": [
+        {
+          "day": 0,
+          "mean_pct_change": -0.0,
+          "lower_95": -0.0,
+          "upper_95": 0.0
+        },
+        {
+          "day": 15,
+          "mean_pct_change": -0.378,
+          "lower_95": -0.863,
+          "upper_95": 0.107
+        },
+        {
+          "day": 30,
+          "mean_pct_change": -0.756,
+          "lower_95": -1.442,
+          "upper_95": -0.07
+        },
+        {
+          "day": 45,
+          "mean_pct_change": -1.134,
+          "lower_95": -1.975,
+          "upper_95": -0.294
+        },
+        {
+          "day": 60,
+          "mean_pct_change": -1.513,
+          "lower_95": -2.483,
+          "upper_95": -0.543
+        },
+        {
+          "day": 75,
+          "mean_pct_change": -1.891,
+          "lower_95": -2.975,
+          "upper_95": -0.806
+        },
+        {
+          "day": 90,
+          "mean_pct_change": -2.269,
+          "lower_95": -3.457,
+          "upper_95": -1.081
+        },
+        {
+          "day": 105,
+          "mean_pct_change": -2.647,
+          "lower_95": -3.931,
+          "upper_95": -1.364
+        },
+        {
+          "day": 120,
+          "mean_pct_change": -3.025,
+          "lower_95": -4.397,
+          "upper_95": -1.653
+        },
+        {
+          "day": 135,
+          "mean_pct_change": -3.403,
+          "lower_95": -4.859,
+          "upper_95": -1.948
+        },
+        {
+          "day": 150,
+          "mean_pct_change": -3.782,
+          "lower_95": -5.316,
+          "upper_95": -2.248
+        },
+        {
+          "day": 165,
+          "mean_pct_change": -4.16,
+          "lower_95": -5.769,
+          "upper_95": -2.551
+        },
+        {
+          "day": 180,
+          "mean_pct_change": -4.538,
+          "lower_95": -6.218,
+          "upper_95": -2.858
+        }
+      ],
+      "risk": {
+        "threshold_pct_change": -10.0,
+        "prob_below_threshold_at_end": 0.0,
+        "level": "low"
+      }
+    },
+    {
+      "site": "total_hip",
+      "points": [
+        {
+          "day": 0,
+          "mean_pct_change": -0.0,
+          "lower_95": -0.0,
+          "upper_95": 0.0
+        },
+        {
+          "day": 15,
+          "mean_pct_change": -0.413,
+          "lower_95": -0.898,
+          "upper_95": 0.073
+        },
+        {
+          "day": 30,
+          "mean_pct_change": -0.825,
+          "lower_95": -1.511,
+          "upper_95": -0.139
+        },
+        {
+          "day": 45,
+          "mean_pct_change": -1.238,
+          "lower_95": -2.078,
+          "upper_95": -0.397
+        },
+        {
+          "day": 60,
+          "mean_pct_change": -1.65,
+          "lower_95": -2.62,
+          "upper_95": -0.68
+        },
+        {
+          "day": 75,
+          "mean_pct_change": -2.063,
+          "lower_95": -3.147,
+          "upper_95": -0.978
+        },
+        {
+          "day": 90,
+          "mean_pct_change": -2.475,
+          "lower_95": -3.663,
+          "upper_95": -1.287
+        },
+        {
+          "day": 105,
+          "mean_pct_change": -2.888,
+          "lower_95": -4.171,
+          "upper_95": -1.604
+        },
+        {
+          "day": 120,
+          "mean_pct_change": -3.3,
+          "lower_95": -4.672,
+          "upper_95": -1.928
+        },
+        {
+          "day": 135,
+          "mean_pct_change": -3.713,
+          "lower_95": -5.168,
+          "upper_95": -2.258
+        },
+        {
+          "day": 150,
+          "mean_pct_change": -4.125,
+          "lower_95": -5.659,
+          "upper_95": -2.591
+        },
+        {
+          "day": 165,
+          "mean_pct_change": -4.538,
+          "lower_95": -6.147,
+          "upper_95": -2.929
+        },
+        {
+          "day": 180,
+          "mean_pct_change": -4.951,
+          "lower_95": -6.631,
+          "upper_95": -3.27
+        }
+      ],
+      "risk": {
+        "threshold_pct_change": -10.0,
+        "prob_below_threshold_at_end": 0.0,
+        "level": "low"
+      }
+    },
+    {
+      "site": "distal_tibia",
+      "points": [
+        {
+          "day": 0,
+          "mean_pct_change": -0.0,
+          "lower_95": -0.0,
+          "upper_95": 0.0
+        },
+        {
+          "day": 15,
+          "mean_pct_change": -0.275,
+          "lower_95": -0.76,
+          "upper_95": 0.21
+        },
+        {
+          "day": 30,
+          "mean_pct_change": -0.55,
+          "lower_95": -1.236,
+          "upper_95": 0.136
+        },
+        {
+          "day": 45,
+          "mean_pct_change": -0.825,
+          "lower_95": -1.665,
+          "upper_95": 0.015
+        },
+        {
+          "day": 60,
+          "mean_pct_change": -1.1,
+          "lower_95": -2.07,
+          "upper_95": -0.13
+        },
+        {
+          "day": 75,
+          "mean_pct_change": -1.375,
+          "lower_95": -2.46,
+          "upper_95": -0.29
+        },
+        {
+          "day": 90,
+          "mean_pct_change": -1.65,
+          "lower_95": -2.838,
+          "upper_95": -0.462
+        },
+        {
+          "day": 105,
+          "mean_pct_change": -1.925,
+          "lower_95": -3.209,
+          "upper_95": -0.642
+        },
+        {
+          "day": 120,
+          "mean_pct_change": -2.2,
+          "lower_95": -3.572,
+          "upper_95": -0.828
+        },
+        {
+          "day": 135,
+          "mean_pct_change": -2.475,
+          "lower_95": -3.93,
+          "upper_95": -1.02
+        },
+        {
+          "day": 150,
+          "mean_pct_change": -2.75,
+          "lower_95": -4.284,
+          "upper_95": -1.216
+        },
+        {
+          "day": 165,
+          "mean_pct_change": -3.025,
+          "lower_95": -4.634,
+          "upper_95": -1.417
+        },
+        {
+          "day": 180,
+          "mean_pct_change": -3.3,
+          "lower_95": -4.981,
+          "upper_95": -1.62
+        }
+      ],
+      "risk": {
+        "threshold_pct_change": -10.0,
+        "prob_below_threshold_at_end": 0.0,
+        "level": "low"
+      }
+    }
+  ],
+  "drivers": [
+    {
+      "signal": "resistive_exercise",
+      "direction": "protective",
+      "weight": 0.35,
+      "explanation": "Illustrative loss-rate multiplier x0.65."
+    },
+    {
+      "signal": "ctx_vs_baseline",
+      "direction": "harmful",
+      "weight": 0.12,
+      "explanation": "Latest CTX is 1.19x the pre-flight value."
+    }
+  ],
+  "warnings": [
+    "Stub engine: illustrative numbers only."
+  ],
+  "requires_physician_review": true,
+  "disclaimer": "Research prototype built for a hackathon. Not a medical device. Outputs are decision support for a qualified flight surgeon and must never replace clinical judgement."
+}

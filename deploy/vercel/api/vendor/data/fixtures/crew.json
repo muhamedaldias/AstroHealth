@@ -1,0 +1,100 @@
+{
+  "items": [
+    {
+      "id": "crew-01",
+      "display_name": "Nova (fictional)",
+      "sex": "female",
+      "age_years": 38,
+      "baseline_bmd": [
+        {
+          "site": "lumbar_spine",
+          "bmd_g_cm2": 1.02
+        },
+        {
+          "site": "femoral_neck",
+          "bmd_g_cm2": 0.857
+        },
+        {
+          "site": "total_hip",
+          "bmd_g_cm2": 1.0
+        },
+        {
+          "site": "distal_tibia",
+          "bmd_g_cm2": 0.969
+        }
+      ]
+    },
+    {
+      "id": "crew-02",
+      "display_name": "Atlas (fictional)",
+      "sex": "male",
+      "age_years": 45,
+      "baseline_bmd": [
+        {
+          "site": "lumbar_spine",
+          "bmd_g_cm2": 1.12
+        },
+        {
+          "site": "femoral_neck",
+          "bmd_g_cm2": 0.941
+        },
+        {
+          "site": "total_hip",
+          "bmd_g_cm2": 1.098
+        },
+        {
+          "site": "distal_tibia",
+          "bmd_g_cm2": 1.064
+        }
+      ]
+    },
+    {
+      "id": "crew-03",
+      "display_name": "Lyra (fictional)",
+      "sex": "female",
+      "age_years": 41,
+      "baseline_bmd": [
+        {
+          "site": "lumbar_spine",
+          "bmd_g_cm2": 0.98
+        },
+        {
+          "site": "femoral_neck",
+          "bmd_g_cm2": 0.823
+        },
+        {
+          "site": "total_hip",
+          "bmd_g_cm2": 0.96
+        },
+        {
+          "site": "distal_tibia",
+          "bmd_g_cm2": 0.931
+        }
+      ]
+    },
+    {
+      "id": "crew-04",
+      "display_name": "Orion (fictional)",
+      "sex": "male",
+      "age_years": 36,
+      "baseline_bmd": [
+        {
+          "site": "lumbar_spine",
+          "bmd_g_cm2": 1.18
+        },
+        {
+          "site": "femoral_neck",
+          "bmd_g_cm2": 0.991
+        },
+        {
+          "site": "total_hip",
+          "bmd_g_cm2": 1.156
+        },
+        {
+          "site": "distal_tibia",
+          "bmd_g_cm2": 1.121
+        }
+      ]
+    }
+  ]
+}

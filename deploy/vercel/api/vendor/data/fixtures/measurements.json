@@ -1,0 +1,724 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "ctx",
+      "value": 0.41,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 2,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "p1np",
+      "value": 41.496,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 3,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "urine_calcium",
+      "value": 4.304,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 4,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "vitamin_d_25oh",
+      "value": 59.873,
+      "unit": "nmol/L",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 5,
+      "crew_id": "crew-01",
+      "mission_day": -30,
+      "marker": "pth",
+      "value": 35.528,
+      "unit": "pg/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 6,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "ctx",
+      "value": 0.419,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 7,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "p1np",
+      "value": 40.984,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 8,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "urine_calcium",
+      "value": 4.468,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 9,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "vitamin_d_25oh",
+      "value": 62.842,
+      "unit": "nmol/L",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 10,
+      "crew_id": "crew-01",
+      "mission_day": 30,
+      "marker": "pth",
+      "value": 34.123,
+      "unit": "pg/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 11,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "ctx",
+      "value": 0.442,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 12,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "p1np",
+      "value": 42.152,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 13,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "urine_calcium",
+      "value": 4.857,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 14,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "vitamin_d_25oh",
+      "value": 60.68,
+      "unit": "nmol/L",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 15,
+      "crew_id": "crew-01",
+      "mission_day": 60,
+      "marker": "pth",
+      "value": 34.36,
+      "unit": "pg/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 16,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "ctx",
+      "value": 0.489,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 17,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "p1np",
+      "value": 39.591,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 18,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "urine_calcium",
+      "value": 5.023,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 19,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "vitamin_d_25oh",
+      "value": 58.376,
+      "unit": "nmol/L",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 20,
+      "crew_id": "crew-01",
+      "mission_day": 90,
+      "marker": "pth",
+      "value": 33.14,
+      "unit": "pg/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 21,
+      "crew_id": "crew-02",
+      "mission_day": -30,
+      "marker": "ctx",
+      "value": 0.378,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 22,
+      "crew_id": "crew-02",
+      "mission_day": -30,
+      "marker": "p1np",
+      "value": 45.698,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 23,
+      "crew_id": "crew-02",
+      "mission_day": -30,
+      "marker": "urine_calcium",
+      "value": 4.65,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 24,
+      "crew_id": "crew-02",
+      "mission_day": -30,
+      "marker": "vitamin_d_25oh",
+      "value": 63.134,
+      "unit": "nmol/L",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 25,
+      "crew_id": "crew-02",
+      "mission_day": -30,
+      "marker": "pth",
+      "value": 35.341,
+      "unit": "pg/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 26,
+      "crew_id": "crew-02",
+      "mission_day": 30,
+      "marker": "ctx",
+      "value": 0.381,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 27,
+      "crew_id": "crew-02",
+      "mission_day": 30,
+      "marker": "p1np",
+      "value": 46.133,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 28,
+      "crew_id": "crew-02",
+      "mission_day": 30,
+      "marker": "urine_calcium",
+      "value": 4.813,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 29,
+      "crew_id": "crew-02",
+      "mission_day": 30,
+      "marker": "vitamin_d_25oh",
+      "value": 63.482,
+      "unit": "nmol/L",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 30,
+      "crew_id": "crew-02",
+      "mission_day": 30,
+      "marker": "pth",
+      "value": 36.33,
+      "unit": "pg/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 31,
+      "crew_id": "crew-02",
+      "mission_day": 60,
+      "marker": "ctx",
+      "value": 0.406,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 32,
+      "crew_id": "crew-02",
+      "mission_day": 60,
+      "marker": "p1np",
+      "value": 44.067,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 33,
+      "crew_id": "crew-02",
+      "mission_day": 60,
+      "marker": "urine_calcium",
+      "value": 5.168,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 34,
+      "crew_id": "crew-02",
+      "mission_day": 60,
+      "marker": "vitamin_d_25oh",
+      "value": 64.469,
+      "unit": "nmol/L",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 35,
+      "crew_id": "crew-02",
+      "mission_day": 60,
+      "marker": "pth",
+      "value": 34.806,
+      "unit": "pg/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 36,
+      "crew_id": "crew-02",
+      "mission_day": 90,
+      "marker": "ctx",
+      "value": 0.427,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 37,
+      "crew_id": "crew-02",
+      "mission_day": 90,
+      "marker": "p1np",
+      "value": 44.181,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 38,
+      "crew_id": "crew-02",
+      "mission_day": 90,
+      "marker": "urine_calcium",
+      "value": 5.415,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 39,
+      "crew_id": "crew-02",
+      "mission_day": 90,
+      "marker": "vitamin_d_25oh",
+      "value": 63.625,
+      "unit": "nmol/L",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 40,
+      "crew_id": "crew-02",
+      "mission_day": 90,
+      "marker": "pth",
+      "value": 34.39,
+      "unit": "pg/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 41,
+      "crew_id": "crew-03",
+      "mission_day": -30,
+      "marker": "ctx",
+      "value": 0.546,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 42,
+      "crew_id": "crew-03",
+      "mission_day": -30,
+      "marker": "p1np",
+      "value": 40.8,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 43,
+      "crew_id": "crew-03",
+      "mission_day": -30,
+      "marker": "urine_calcium",
+      "value": 3.888,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 44,
+      "crew_id": "crew-03",
+      "mission_day": -30,
+      "marker": "vitamin_d_25oh",
+      "value": 84.465,
+      "unit": "nmol/L",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 45,
+      "crew_id": "crew-03",
+      "mission_day": -30,
+      "marker": "pth",
+      "value": 28.204,
+      "unit": "pg/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 46,
+      "crew_id": "crew-03",
+      "mission_day": 30,
+      "marker": "ctx",
+      "value": 0.588,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 47,
+      "crew_id": "crew-03",
+      "mission_day": 30,
+      "marker": "p1np",
+      "value": 41.104,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 48,
+      "crew_id": "crew-03",
+      "mission_day": 30,
+      "marker": "urine_calcium",
+      "value": 4.072,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 49,
+      "crew_id": "crew-03",
+      "mission_day": 30,
+      "marker": "vitamin_d_25oh",
+      "value": 82.089,
+      "unit": "nmol/L",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 50,
+      "crew_id": "crew-03",
+      "mission_day": 30,
+      "marker": "pth",
+      "value": 27.796,
+      "unit": "pg/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 51,
+      "crew_id": "crew-03",
+      "mission_day": 60,
+      "marker": "ctx",
+      "value": 0.593,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 52,
+      "crew_id": "crew-03",
+      "mission_day": 60,
+      "marker": "p1np",
+      "value": 42.208,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 53,
+      "crew_id": "crew-03",
+      "mission_day": 60,
+      "marker": "urine_calcium",
+      "value": 4.33,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 54,
+      "crew_id": "crew-03",
+      "mission_day": 60,
+      "marker": "vitamin_d_25oh",
+      "value": 80.067,
+      "unit": "nmol/L",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 55,
+      "crew_id": "crew-03",
+      "mission_day": 60,
+      "marker": "pth",
+      "value": 27.556,
+      "unit": "pg/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 56,
+      "crew_id": "crew-03",
+      "mission_day": 90,
+      "marker": "ctx",
+      "value": 0.598,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 57,
+      "crew_id": "crew-03",
+      "mission_day": 90,
+      "marker": "p1np",
+      "value": 41.107,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 58,
+      "crew_id": "crew-03",
+      "mission_day": 90,
+      "marker": "urine_calcium",
+      "value": 4.405,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 59,
+      "crew_id": "crew-03",
+      "mission_day": 90,
+      "marker": "vitamin_d_25oh",
+      "value": 82.108,
+      "unit": "nmol/L",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 60,
+      "crew_id": "crew-03",
+      "mission_day": 90,
+      "marker": "pth",
+      "value": 27.468,
+      "unit": "pg/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 61,
+      "crew_id": "crew-04",
+      "mission_day": -30,
+      "marker": "ctx",
+      "value": 0.396,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 62,
+      "crew_id": "crew-04",
+      "mission_day": -30,
+      "marker": "p1np",
+      "value": 46.254,
+      "unit": "ng/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 63,
+      "crew_id": "crew-04",
+      "mission_day": -30,
+      "marker": "urine_calcium",
+      "value": 4.184,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 64,
+      "crew_id": "crew-04",
+      "mission_day": -30,
+      "marker": "vitamin_d_25oh",
+      "value": 61.979,
+      "unit": "nmol/L",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 65,
+      "crew_id": "crew-04",
+      "mission_day": -30,
+      "marker": "pth",
+      "value": 33.219,
+      "unit": "pg/mL",
+      "recorded_at": "2026-01-01T00:00:00+00:00"
+    },
+    {
+      "id": 66,
+      "crew_id": "crew-04",
+      "mission_day": 30,
+      "marker": "ctx",
+      "value": 0.417,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 67,
+      "crew_id": "crew-04",
+      "mission_day": 30,
+      "marker": "p1np",
+      "value": 46.59,
+      "unit": "ng/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 68,
+      "crew_id": "crew-04",
+      "mission_day": 30,
+      "marker": "urine_calcium",
+      "value": 4.667,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 69,
+      "crew_id": "crew-04",
+      "mission_day": 30,
+      "marker": "vitamin_d_25oh",
+      "value": 57.761,
+      "unit": "nmol/L",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 70,
+      "crew_id": "crew-04",
+      "mission_day": 30,
+      "marker": "pth",
+      "value": 33.583,
+      "unit": "pg/mL",
+      "recorded_at": "2026-03-02T00:00:00+00:00"
+    },
+    {
+      "id": 71,
+      "crew_id": "crew-04",
+      "mission_day": 60,
+      "marker": "ctx",
+      "value": 0.445,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 72,
+      "crew_id": "crew-04",
+      "mission_day": 60,
+      "marker": "p1np",
+      "value": 47.704,
+      "unit": "ng/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 73,
+      "crew_id": "crew-04",
+      "mission_day": 60,
+      "marker": "urine_calcium",
+      "value": 4.848,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 74,
+      "crew_id": "crew-04",
+      "mission_day": 60,
+      "marker": "vitamin_d_25oh",
+      "value": 60.57,
+      "unit": "nmol/L",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 75,
+      "crew_id": "crew-04",
+      "mission_day": 60,
+      "marker": "pth",
+      "value": 32.618,
+      "unit": "pg/mL",
+      "recorded_at": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "id": 76,
+      "crew_id": "crew-04",
+      "mission_day": 90,
+      "marker": "ctx",
+      "value": 0.459,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 77,
+      "crew_id": "crew-04",
+      "mission_day": 90,
+      "marker": "p1np",
+      "value": 45.054,
+      "unit": "ng/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 78,
+      "crew_id": "crew-04",
+      "mission_day": 90,
+      "marker": "urine_calcium",
+      "value": 5.074,
+      "unit": "mmol/24h",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 79,
+      "crew_id": "crew-04",
+      "mission_day": 90,
+      "marker": "vitamin_d_25oh",
+      "value": 60.068,
+      "unit": "nmol/L",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "id": 80,
+      "crew_id": "crew-04",
+      "mission_day": 90,
+      "marker": "pth",
+      "value": 31.78,
+      "unit": "pg/mL",
+      "recorded_at": "2026-05-01T00:00:00+00:00"
+    }
+  ]
+}

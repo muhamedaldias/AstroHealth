@@ -1,0 +1,9 @@
+{
+  "_about": "fixture file -> schema name in contracts/openapi.yaml. Tests validate every entry.",
+  "scenarios.json": "ScenarioList",
+  "countermeasures.json": "CountermeasureList",
+  "crew.json": "CrewList",
+  "measurements.json": "MeasurementList",
+  "engine_input_example.json": "EngineInput",
+  "forecast_example.json": "Forecast"
+}

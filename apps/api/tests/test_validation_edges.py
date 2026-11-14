@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 
 import bonetwin_contracts as c
 from fastapi.testclient import TestClient
 
-from bonetwin_api.config import resolve_database_url
+from bonetwin_api.config import find_repo_root, resolve_database_url
+from bonetwin_api.main import create_app
 
 
 def test_forecast_unknown_crew_is_not_found(client: TestClient) -> None:
@@ -60,3 +62,14 @@ def test_relative_sqlite_url_resolves_to_repo_root() -> None:
     assert resolve_database_url("sqlite:///:memory:") == "sqlite:///:memory:"
     absolute = "sqlite:////opt/AstroHealth/data/runtime/app.db"
     assert resolve_database_url(absolute) == absolute
+
+
+def test_create_app_honors_fixtures_dir_env_override(tmp_path: Path, monkeypatch) -> None:
+    """BONETWIN_FIXTURES_DIR points create_app at fixtures outside the repo root."""
+    fixtures_dir = tmp_path / "fixtures"
+    shutil.copytree(find_repo_root() / "contracts" / "fixtures", fixtures_dir)
+    monkeypatch.setenv("BONETWIN_FIXTURES_DIR", str(fixtures_dir))
+    app = create_app(database_url="sqlite://")
+    response = TestClient(app).get("/api/v1/scenarios")
+    assert response.status_code == 200
+    assert len(response.json()["items"]) >= 3

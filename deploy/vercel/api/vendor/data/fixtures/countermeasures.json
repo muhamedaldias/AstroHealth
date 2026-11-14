@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "id": "resistive_exercise",
+      "name": "Resistive exercise (ARED-class)",
+      "category": "exercise",
+      "evidence_level": "established",
+      "summary": "Heavy resistive training on a vacuum-cylinder device. Reduces, but does not stop, loss.",
+      "contraindications": [
+        "Acute musculoskeletal injury"
+      ],
+      "requires_physician_approval": false
+    },
+    {
+      "id": "flywheel_device",
+      "name": "Compact flywheel device",
+      "category": "exercise",
+      "evidence_level": "limited",
+      "summary": "Lightweight alternative to ARED for small vehicles; effect on bone is less established.",
+      "contraindications": [
+        "Acute musculoskeletal injury"
+      ],
+      "requires_physician_approval": false
+    },
+    {
+      "id": "vitamin_d_calcium",
+      "name": "Vitamin D and calcium management",
+      "category": "nutrition",
+      "evidence_level": "established",
+      "summary": "Maintain vitamin D status and calcium intake; supportive, not sufficient alone.",
+      "contraindications": [
+        "Hypercalciuria or kidney-stone history"
+      ],
+      "requires_physician_approval": true
+    },
+    {
+      "id": "bisphosphonate",
+      "name": "Anti-resorptive drug (bisphosphonate)",
+      "category": "pharmacological",
+      "evidence_level": "limited",
+      "summary": "Studied with exercise on ISS; may affect post-flight recovery. Flight surgeon decides.",
+      "contraindications": [
+        "Renal impairment",
+        "Dental surgery planned"
+      ],
+      "requires_physician_approval": true
+    }
+  ]
+}

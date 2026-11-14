@@ -29,7 +29,10 @@ dev = [
 [tool.ruff]
 line-length = 110
 target-version = "py311"
-extend-exclude = ["packages/contracts_py/src/bonetwin_contracts/models.py"]
+extend-exclude = [
+    "packages/contracts_py/src/bonetwin_contracts/models.py",
+    "deploy/vercel/api/vendor/bonetwin_contracts/models.py",  # vendored copy of the excluded source
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "TID"]
