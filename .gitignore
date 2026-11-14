@@ -33,3 +33,7 @@ dist-ssr/
 .env.*
 !.env.example
 # NOTE: .osdr_cache/ is intentionally TRACKED (NASA OSDR reference data)
+
+# runtime/build artifacts (previously tracked by accident)
+apps/web/api8000.log
+apps/web/tsconfig.app.tsbuildinfo

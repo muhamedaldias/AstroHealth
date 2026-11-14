@@ -2,12 +2,10 @@
 # (longest prefix wins). `make check` fails on orphan files.
 # .github/CODEOWNERS is GENERATED from this file (make gen).
 #
-# Replace the three handles below with the real GitHub usernames, then run `make gen`.
-
 people:
-  ai:  { handle: "@AI_OWNER", role: "AI and Data" }
-  web: { handle: "@FE_OWNER", role: "Frontend" }
-  api: { handle: "@BE_OWNER", role: "Backend" }
+  ai:  { handle: "@muhamedaldias", role: "AI and Data" }
+  web: { handle: "@muhamedaldias", role: "Frontend" }
+  api: { handle: "@muhamedaldias", role: "Backend" }
 
 paths:
   # ---- shared contract: change only by contract PR, approved by BOTH other members

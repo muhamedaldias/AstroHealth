@@ -6,7 +6,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Annotated, Any, Literal
 
-from pydantic import AwareDatetime, BaseModel, Field
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 
 
 class Error(BaseModel):
@@ -127,6 +127,9 @@ class CrewList(BaseModel):
 
 
 class MeasurementCreate(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
     mission_day: Annotated[int, Field(ge=-365, le=1500)]
     marker: MarkerId
     value: Annotated[float, Field(ge=0.0, le=1000000.0)]
@@ -147,6 +150,9 @@ class MeasurementList(BaseModel):
 
 
 class ForecastRequest(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
     crew_id: str
     scenario_id: str
     countermeasure_ids: list[str] = []
@@ -210,12 +216,18 @@ class Forecast(BaseModel):
 
 
 class WhatIfPlan(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
     plan_id: str
     label: str
     countermeasure_ids: list[str]
 
 
 class WhatIfRequest(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
     crew_id: str
     scenario_id: str
     plans: Annotated[list[WhatIfPlan], Field(max_length=4, min_length=2)]
