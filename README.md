@@ -1,8 +1,9 @@
 # Astro Bone Twin
 
-Web platform that forecasts each astronaut's bone-density trajectory (with uncertainty) during a
-long mission, compares countermeasure plans ("what if"), and keeps a flight surgeon in the loop.
-Built for the NASA Space Apps Challenge 2026 (astronaut health monitoring).
+API-first demo for astronaut health monitoring: a contract-first FastAPI backend
+(bone-loss forecast, what-if countermeasure comparison, crew telemetry, NASA OSDR
+study logs) and a React mission-control UI on top of it.
+Built for the NASA Space Apps Challenge 2026.
 
 > Research prototype, not a medical device. Demo crew and biomarkers are **simulated**.
 
@@ -15,6 +16,29 @@ make check        # everything CI runs
 make docker-up    # all-in-one at http://localhost:8000
 ```
 Requirements: [uv](https://docs.astral.sh/uv/), Node 22+, GNU make (Windows: Git Bash or WSL).
+
+## What's in the UI
+Four tabs (`apps/web/src/components/Header.tsx`), fed by the live API:
+- **Dashboard** — crew selector and vitals HUD for the selected astronaut.
+- **DNA & Telemetry** — DNA helix scanner, bone-density scanner, radiation telemetry chart.
+- **Bio-Rescue Protocol** — the astronaut's countermeasure / food-printer rescue plan.
+- **NASA Data Logs** — gene-expression table backed by real NASA OSDR studies.
+
+`POST /api/v1/forecast` and `POST /api/v1/whatif` are live contract endpoints today
+(a UI panel for them is being added in this same fix round).
+
+## Contract-first workflow
+`contracts/openapi.yaml` is the single source of truth for every data shape:
+1. Edit the spec (contract PR approved by the owners).
+2. `make gen` regenerates the pydantic models, the TypeScript types and CODEOWNERS.
+3. Never hand-edit generated code (`packages/contracts_py/`, `apps/web/src/api/schema.d.ts`,
+   `.github/CODEOWNERS`).
+
+## Engines
+The forecast engine is pluggable via a registry (`packages/twin_core/src/twin_core/registry.py`):
+select with `BONETWIN_ENGINE=stub|calibrated` (default `stub`; this deployment runs `calibrated`).
+New engines register there and are automatically contract-checked by
+`tests/test_engine_contract.py`.
 
 ## Layout
 ```
