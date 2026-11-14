@@ -19,6 +19,18 @@ export const useForecast = (crewId: string, scenarioId: string, countermeasureId
       ),
   });
 
+export const useScenarios = () =>
+  useQuery({
+    queryKey: ["scenarios"],
+    queryFn: async () => unwrap(await api.GET("/api/v1/scenarios")),
+  });
+
+export const useCountermeasures = () =>
+  useQuery({
+    queryKey: ["countermeasures"],
+    queryFn: async () => unwrap(await api.GET("/api/v1/countermeasures")),
+  });
+
 export const useTelemetryCrew = () =>
   useQuery({
     queryKey: ["telemetry-crew"],

@@ -18,14 +18,15 @@ make docker-up    # all-in-one at http://localhost:8000
 Requirements: [uv](https://docs.astral.sh/uv/), Node 22+, GNU make (Windows: Git Bash or WSL).
 
 ## What's in the UI
-Four tabs (`apps/web/src/components/Header.tsx`), fed by the live API:
+Five tabs (`apps/web/src/components/Header.tsx`), fed by the live API:
 - **Dashboard** — crew selector and vitals HUD for the selected astronaut.
 - **DNA & Telemetry** — DNA helix scanner, bone-density scanner, radiation telemetry chart.
 - **Bio-Rescue Protocol** — the astronaut's countermeasure / food-printer rescue plan.
 - **NASA Data Logs** — gene-expression table backed by real NASA OSDR studies.
+- **Bone Forecast** — worst-site predicted bone-density change and per-site CI bands from
+  the live engine via `POST /api/v1/forecast` (crew, scenario and countermeasure selection).
 
-`POST /api/v1/forecast` and `POST /api/v1/whatif` are live contract endpoints today
-(a UI panel for them is being added in this same fix round).
+`POST /api/v1/whatif` remains a live contract endpoint without a dedicated UI panel today.
 
 ## Contract-first workflow
 `contracts/openapi.yaml` is the single source of truth for every data shape:

@@ -1,10 +1,20 @@
-import { Database, Dna, FileText, Globe, LayoutDashboard, Printer, Sliders } from "lucide-react";
+import {
+  Bone,
+  Database,
+  Dna,
+  FileText,
+  Globe,
+  LayoutDashboard,
+  Printer,
+  Sliders,
+} from "lucide-react";
 import type React from "react";
 import { translations } from "../i18n/translations";
 import type { Language } from "../types";
 import { AstroLogo } from "./AstroLogo";
 
 export type ActiveTab =
+  | "bone-forecast"
   | "dashboard"
   | "dna-telemetry"
   | "food-printer"
@@ -60,6 +70,12 @@ export const Header: React.FC<HeaderProps> = ({
       label_ar: "سجلات ناسا",
       icon: Database,
     },
+    {
+      id: "bone-forecast",
+      label: "Bone Forecast",
+      label_ar: "التنبؤ العظمي",
+      icon: Bone,
+    },
   ];
 
   return (
@@ -69,31 +85,35 @@ export const Header: React.FC<HeaderProps> = ({
         <AstroLogo size="nav" lang={lang} harmonized />
 
         {/* Segmented Tab Navigation with Teal Accent */}
-        <nav className="flex items-center p-1 bg-white/40 backdrop-blur-md rounded-2xl border border-brand-500/15 overflow-x-auto max-w-full shadow-inner">
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
+        <nav className="p-1 bg-white/40 backdrop-blur-md rounded-2xl border border-brand-500/15 overflow-x-auto max-w-full shadow-inner">
+          <div role="tablist" className="flex items-center">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
 
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => onTabChange(tab.id)}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs transition-all duration-200 whitespace-nowrap ${
-                  isActive
-                    ? "bg-white/90 text-brand-700 font-bold shadow-sm border border-brand-300/60 ring-1 ring-brand-400/15 scale-[1.02]"
-                    : "text-brand-600 hover:text-brand-700 hover:bg-white/60 font-medium"
-                }`}
-              >
-                <Icon
-                  className={`w-3.5 h-3.5 transition-colors ${
-                    isActive ? "text-brand-400" : "text-slate-400"
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => onTabChange(tab.id)}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs transition-all duration-200 whitespace-nowrap ${
+                    isActive
+                      ? "bg-white/90 text-brand-700 font-bold shadow-sm border border-brand-300/60 ring-1 ring-brand-400/15 scale-[1.02]"
+                      : "text-brand-600 hover:text-brand-700 hover:bg-white/60 font-medium"
                   }`}
-                />
-                <span>{lang === "ar" ? tab.label_ar : tab.label}</span>
-              </button>
-            );
-          })}
+                >
+                  <Icon
+                    className={`w-3.5 h-3.5 transition-colors ${
+                      isActive ? "text-brand-400" : "text-slate-400"
+                    }`}
+                  />
+                  <span>{lang === "ar" ? tab.label_ar : tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </nav>
 
         {/* Quick Utilities: Simulation, Dossier, Language Toggle */}

@@ -6,6 +6,7 @@ import { BoneDensityScanner } from "./components/BoneDensityScanner";
 import { CrewSelector } from "./components/CrewSelector";
 import { DnaHelixScanner } from "./components/DnaHelixScanner";
 import { FlightClearanceModal } from "./components/FlightClearanceModal";
+import { ForecastPanel } from "./components/ForecastPanel";
 import { GeneExpressionTable } from "./components/GeneExpressionTable";
 import { type ActiveTab, Header } from "./components/Header";
 import { RadiationTelemetryChart } from "./components/RadiationTelemetryChart";
@@ -270,7 +271,14 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 5: SPACEFLIGHT RISK SIMULATOR */}
+        {/* TAB 5: BONE FORECAST (live engine via POST /api/v1/forecast) */}
+        {activeTab === "bone-forecast" && (
+          <div className="flex flex-col gap-6 animate-fade-in">
+            <ForecastPanel lang={lang} />
+          </div>
+        )}
+
+        {/* TAB 6: SPACEFLIGHT RISK SIMULATOR */}
         {activeTab === "risk-simulator" && (
           <div className="flex flex-col gap-6 animate-fade-in">
             <RiskSimulatorPanel astronaut={selectedAstronaut} lang={lang} />
