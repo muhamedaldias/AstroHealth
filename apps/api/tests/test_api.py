@@ -92,6 +92,20 @@ def test_forecast_unknown_countermeasure(client: TestClient) -> None:
     assert c.Error.model_validate(r.json()).details["resource"] == "countermeasure"
 
 
+def test_forecast_rejects_unknown_field(client: TestClient) -> None:
+    # 0.1.4: request schemas forbid unknown fields; a misspelled key is a 422, not a silent no-op.
+    r = client.post(
+        "/api/v1/forecast",
+        json={
+            "crew_id": "crew-01",
+            "scenario_id": "iss-180",
+            "countermeasures": ["resistive_exercise"],
+        },
+    )
+    assert r.status_code == 422
+    assert c.Error.model_validate(r.json()).code == "validation_error"
+
+
 def test_whatif_more_protection_means_less_loss(client: TestClient) -> None:
     r = client.post(
         "/api/v1/whatif",

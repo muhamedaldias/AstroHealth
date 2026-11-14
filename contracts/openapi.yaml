@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Astro Bone Twin API
-  version: 0.1.1
+  version: 0.1.4
   description: |
     SINGLE SOURCE OF TRUTH for every data shape in this project.
 
@@ -377,6 +377,7 @@ components:
 
     MeasurementCreate:
       type: object
+      additionalProperties: false
       required: [mission_day, marker, value]
       properties:
         mission_day: { type: integer, minimum: -365, maximum: 1500 }
@@ -408,6 +409,7 @@ components:
     # -------------------------------------------------------------- forecast
     ForecastRequest:
       type: object
+      additionalProperties: false
       required: [crew_id, scenario_id]
       properties:
         crew_id: { type: string }
@@ -508,6 +510,7 @@ components:
 
     WhatIfPlan:
       type: object
+      additionalProperties: false
       required: [plan_id, label, countermeasure_ids]
       properties:
         plan_id: { type: string }
@@ -518,6 +521,7 @@ components:
 
     WhatIfRequest:
       type: object
+      additionalProperties: false
       required: [crew_id, scenario_id, plans]
       properties:
         crew_id: { type: string }
