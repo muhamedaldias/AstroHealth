@@ -417,7 +417,7 @@ export interface components {
             baseline_bmd_t_score: number;
             /** @description Baseline T-score shifted by the engine forecast end value */
             current_bmd_t_score: number;
-            /** @description 100 x engine-forecast probability of crossing the -10% loss threshold */
+            /** @description Predicted worst-site BMD % change at mission horizon from the unmitigated baseline forecast (negative = loss) */
             bone_loss_risk_percentage: number;
             /** @description Simulated 0-100 index */
             dna_damage_index: number;

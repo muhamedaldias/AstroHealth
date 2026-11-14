@@ -1,9 +1,10 @@
 """UI-facing telemetry: the contract crew enriched with simulated mission telemetry.
 
 Static profiles (names, roles, missions, radiation/EVA/DNA indices) are the demo
-cohort's simulated telemetry. Dynamic bone data (baseline/current T-score,
-bone-loss risk) is derived from the contract fixtures and the real engine forecast,
-so the UI reflects the actual twin. All numbers are illustrative, never clinical.
+cohort's simulated telemetry. Dynamic bone data comes from the engine: the
+unmitigated baseline forecast gives the predicted worst-site BMD loss at the
+horizon (shown as BMD Loss) and the protected forecast (resistive exercise)
+gives the T-score shift. All numbers are illustrative, never clinical.
 """
 
 from __future__ import annotations
@@ -14,10 +15,8 @@ from .catalog import Catalog
 from .service import ForecastService
 
 _DEFAULT_SCENARIO = "iss-180"
-_DEFAULT_COUNTERMEASURES = ("resistive_exercise",)
 
 # Illustrative femoral-neck T-score mapping: T = (BMD[g/cm2] - 1.0) / 0.10.
-# Monotone and deterministic, not a clinical conversion.
 _T_SCORE_REF_BMD = 1.0
 _T_SCORE_SD = 0.10
 
@@ -101,7 +100,7 @@ def _baseline_t_score(catalog: Catalog, crew_id: str) -> float:
 
 
 class TelemetryService:
-    """Composes Catalog + Engine forecast into the UI-facing telemetry roster."""
+    """Composes Catalog + Engine forecasts into the UI-facing telemetry roster."""
 
     def __init__(self, catalog: Catalog, service: ForecastService) -> None:
         self.catalog, self.service = catalog, service
@@ -117,10 +116,10 @@ class TelemetryService:
             profile.setdefault("dna_damage_index", 0.0)
             profile.setdefault("cellular_repair_efficiency", 100.0)
 
-            forecast = self.service.forecast(crew.id, _DEFAULT_SCENARIO, list(_DEFAULT_COUNTERMEASURES))
-            femoral = next(s for s in forecast.sites if s.site == "femoral_neck")
-            end_mean = femoral.points[-1].mean_pct_change
-            end_risk = max(s.risk.prob_below_threshold_at_end for s in forecast.sites)
+            baseline = self.service.forecast(crew.id, _DEFAULT_SCENARIO, [])
+            protected = self.service.forecast(crew.id, _DEFAULT_SCENARIO, ["resistive_exercise"])
+            worst = min(s.points[-1].mean_pct_change for s in baseline.sites)
+            femoral_protected = next(s for s in protected.sites if s.site == "femoral_neck")
             baseline_t = _baseline_t_score(self.catalog, crew.id)
 
             members.append(
@@ -138,8 +137,11 @@ class TelemetryService:
                     age=crew.age_years,
                     blood_type=str(profile["blood_type"]),
                     baseline_bmd_t_score=baseline_t,
-                    current_bmd_t_score=round(baseline_t + end_mean / 10.0, 2),
-                    bone_loss_risk_percentage=round(end_risk * 100.0, 1),
+                    current_bmd_t_score=round(
+                        baseline_t + femoral_protected.points[-1].mean_pct_change / 10.0,
+                        2,
+                    ),
+                    bone_loss_risk_percentage=round(worst, 1),
                     dna_damage_index=float(profile["dna_damage_index"]),  # type: ignore[arg-type]
                     cellular_repair_efficiency=float(profile["cellular_repair_efficiency"]),  # type: ignore[arg-type]
                     affected_genes=[],

@@ -8,12 +8,14 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
+from .engines.bone_engine import CalibratedBoneEngine
 from .engines.stub import StubEngine
 from .protocol import Engine, EngineError
 
 _FACTORIES: dict[str, Callable[[], Engine]] = {
     "stub": StubEngine,
-    # "bayes": BayesBoneEngine,   # <- AI/Data owner registers the real engine here
+    "calibrated": CalibratedBoneEngine,
+    # "bayes": BayesBoneEngine,   # <- AI/Data owner registers the ML engine here
 }
 
 
@@ -24,5 +26,5 @@ def list_engines() -> list[str]:
 def get_engine(name: str) -> Engine:
     try:
         return _FACTORIES[name]()
-    except KeyError as exc:
-        raise EngineError(f"unknown engine '{name}'. available: {list_engines()}") from exc
+    except KeyError:
+        raise EngineError(f"unknown engine '{name}'. available: {', '.join(list_engines())}") from None

@@ -1,0 +1,27 @@
+{
+  "name": "astrohealth",
+  "version": "1.0.0",
+  "description": "Web platform that forecasts each astronaut's bone-density trajectory (with uncertainty) during a long mission, compares countermeasure plans (\"what if\"), and keeps a flight surgeon in the loop. Built for the NASA Space Apps Challenge 2026 (astronaut health monitoring).",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhamedaldias/AstroHealth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/muhamedaldias/AstroHealth/issues"
+  },
+  "homepage": "https://github.com/muhamedaldias/AstroHealth#readme",
+  "dependencies": {
+    "playwright-core": "^1.49.1"
+  }
+}

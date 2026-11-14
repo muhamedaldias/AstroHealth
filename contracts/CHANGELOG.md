@@ -10,3 +10,13 @@
 ## 0.1.0 - initial contract
 - Endpoints: health, model-info, scenarios, countermeasures, crew, measurements, forecast, whatif.
 - Engine contract: `EngineInput` -> `Forecast`.
+
+## 0.1.3 - telemetry risk semantics
+- `bone_loss_risk_percentage` now carries the predicted worst-site BMD % change at the
+  mission horizon from the unmitigated baseline forecast (negative = loss), replacing
+  the tail probability that rounded to ~0 for short horizons.
+
+## 0.1.3 - telemetry risk semantics
+- `bone_loss_risk_percentage` now carries the predicted worst-site BMD % change at the
+  mission horizon from the unmitigated baseline forecast (negative = loss), replacing
+  the tail probability that rounded to ~0 for short horizons.

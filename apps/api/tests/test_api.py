@@ -140,7 +140,7 @@ def test_telemetry_crew(client: TestClient) -> None:
     assert payload.count == 4
     assert [m.id for m in payload.crew] == ["crew-01", "crew-02", "crew-03", "crew-04"]
     for m in payload.crew:
-        assert 0 <= m.bone_loss_risk_percentage <= 100
+        assert -30 <= m.bone_loss_risk_percentage <= 0  # predicted loss (negative)
         assert m.current_bmd_t_score <= m.baseline_bmd_t_score  # loss direction
         assert m.cohort_type == "simulated_mission_telemetry"
         assert m.gene_data_source is None

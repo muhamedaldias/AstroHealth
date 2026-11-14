@@ -302,7 +302,7 @@ class TelemetryCrewMember(BaseModel):
     bone_loss_risk_percentage: Annotated[
         float,
         Field(
-            description='100 x engine-forecast probability of crossing the -10% loss threshold'
+            description='Predicted worst-site BMD % change at mission horizon from the unmitigated baseline forecast (negative = loss)'
         ),
     ]
     dna_damage_index: Annotated[float, Field(description='Simulated 0-100 index')]
