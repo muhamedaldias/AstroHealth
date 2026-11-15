@@ -20,10 +20,12 @@ from bonetwin_contracts import (
     WhatIfRequest,
     WhatIfResponse,
 )
+from bonetwin_contracts.models import BioRescueAdviceRequest, BioRescueAdviceResponse
 from fastapi import APIRouter, Request
 
 from .. import __version__
 from ..errors import NotFound
+from ..gemini_advice import generate_advice
 from ..osdr_studies import load_osdr_studies
 
 router = APIRouter(prefix="/api/v1")
@@ -141,3 +143,13 @@ def list_telemetry_crew(request: Request) -> TelemetryCrewPayload:
 )
 def list_osdr_studies() -> OsdrStudiesPayload:
     return load_osdr_studies()
+
+
+@router.post(
+    "/bio-rescue/advice",
+    operation_id="createBioRescueAdvice",
+    response_model=BioRescueAdviceResponse,
+    tags=["forecast"],
+)
+def create_bio_rescue_advice(body: BioRescueAdviceRequest) -> BioRescueAdviceResponse:
+    return generate_advice(body)

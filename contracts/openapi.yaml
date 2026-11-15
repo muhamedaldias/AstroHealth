@@ -172,6 +172,24 @@ paths:
         "404": { $ref: "#/components/responses/NotFound" }
         "422": { $ref: "#/components/responses/ValidationFailed" }
 
+  /api/v1/bio-rescue/advice:
+    post:
+      tags: [forecast]
+      operationId: createBioRescueAdvice
+      summary: AI-generated preventive recommendations and genetic explanation from crew indicators
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/BioRescueAdviceRequest" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BioRescueAdviceResponse" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
   /api/v1/telemetry/crew:
     get:
       tags: [telemetry]
@@ -518,6 +536,37 @@ components:
         countermeasure_ids:
           type: array
           items: { type: string }
+
+    BioRescueLang:
+      type: string
+      enum: [ar, en]
+
+    BioRescueSource:
+      type: string
+      enum: [gemini, fallback]
+
+    BioRescueAdviceRequest:
+      type: object
+      required: [space_days, radiation_msv, bone_loss_risk_percentage, dna_damage_index, lang]
+      properties:
+        space_days: { type: number }
+        radiation_msv: { type: number }
+        bone_loss_risk_percentage: { type: number }
+        dna_damage_index: { type: number }
+        lang: { $ref: "#/components/schemas/BioRescueLang" }
+
+    BioRescueAdviceResponse:
+      type: object
+      required: [recommendations, genetic_explanation, disclaimer, source]
+      properties:
+        recommendations:
+          type: array
+          minItems: 1
+          maxItems: 6
+          items: { type: string }
+        genetic_explanation: { type: string }
+        disclaimer: { type: string }
+        source: { $ref: "#/components/schemas/BioRescueSource" }
 
     WhatIfRequest:
       type: object

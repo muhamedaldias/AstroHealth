@@ -158,6 +158,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/bio-rescue/advice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** AI-generated preventive recommendations and genetic explanation from crew indicators */
+        post: operations["createBioRescueAdvice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/telemetry/crew": {
         parameters: {
             query?: never;
@@ -350,6 +367,23 @@ export interface components {
             plan_id: string;
             label: string;
             countermeasure_ids: string[];
+        };
+        /** @enum {string} */
+        BioRescueLang: "ar" | "en";
+        /** @enum {string} */
+        BioRescueSource: "gemini" | "fallback";
+        BioRescueAdviceRequest: {
+            space_days: number;
+            radiation_msv: number;
+            bone_loss_risk_percentage: number;
+            dna_damage_index: number;
+            lang: components["schemas"]["BioRescueLang"];
+        };
+        BioRescueAdviceResponse: {
+            recommendations: string[];
+            genetic_explanation: string;
+            disclaimer: string;
+            source: components["schemas"]["BioRescueSource"];
         };
         WhatIfRequest: {
             crew_id: string;
@@ -717,6 +751,31 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationFailed"];
+        };
+    };
+    createBioRescueAdvice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BioRescueAdviceRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BioRescueAdviceResponse"];
+                };
+            };
             422: components["responses"]["ValidationFailed"];
         };
     };
